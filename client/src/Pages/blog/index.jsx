@@ -1,61 +1,39 @@
-import React from 'react';
+// src/pages/ArticlesList/ArticlesList.jsx
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Article from '../../components/Card/card';
-
-const articles = [
-  {
-    id: '1',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'The Catalyzer',
-    contenido: 'Swag shoindxigoitch literally meditation subway tile tumblr cold-pressed. Gastropub street art beard dreamcatcher neutra, ethical XOXO lumbersexual.',
-    autor: 'John Doe',
-    fecha: '2023-01-01',
-    descripcion: 'Breve descripción del artículo 1'
-  },
-  {
-    id: '2',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'The 400 Blows',
-    contenido: 'Photo booth fam kinfolk cold-pressed sriracha leggings jianbing microdosingled waistcoat.',
-    autor: 'Jane Doe',
-    fecha: '2023-02-01',
-    descripcion: 'Breve descripción del artículo 2'
-  },
-  {
-    id: '3',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'Shooting Stars',
-    contenido: 'Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee.',
-    autor: 'John Smith',
-    fecha: '2023-03-01',
-    descripcion: 'Breve descripción del artículo 3'
-  },
-  {
-    id: '4',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'Shooting Stars',
-    contenido: 'Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee.',
-    autor: 'John Smith',
-    fecha: '2023-03-01',
-  },
-  {
-    id: '5',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'Shooting Stars',
-    contenido: 'Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee.',
-    autor: 'John Smith',
-    fecha: '2023-03-01',
-  },
-  {
-    id: '6',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'Shooting Stars',
-    contenido: 'Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee.',
-    autor: 'John Smith',
-    fecha: '2023-03-01',
-  },
-];
+import { fetchArticles } from '../../redux/Reducer/NewsReducer';
 
 const ArticlesList = () => {
+  const dispatch = useDispatch();
+  const articles = useSelector((state) => state.articles.articles);
+  const articleStatus = useSelector((state) => state.articles.status);
+  const error = useSelector((state) => state.articles.error);
+
+  useEffect(() => {
+    if (articleStatus === 'idle') {
+      dispatch(fetchArticles());
+    }
+  }, [articleStatus, dispatch]);
+
+  let content;
+
+  if (articleStatus === 'loading') {
+    content = <p>Loading...</p>;
+  } else if (articleStatus === 'succeeded') {
+    content = articles.map((article) => (
+      <Article
+        key={article._id}
+        id={article._id}
+        imagen={article.image}
+        titulo={article.title}
+
+      />
+    ));
+  } else if (articleStatus === 'failed') {
+    content = <p>{error}</p>;
+  }
+ 
   return (
     <div>
       <section className="text-gray-400 bg-gray-900 body-font mx-a">
@@ -74,17 +52,7 @@ const ArticlesList = () => {
             </div>
           </div>
           <div className="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
-            {articles.map((article) => (
-              <Article
-                key={article.id}
-                id={article.id}
-                imagen={article.imagen}
-                titulo={article.titulo}
-                descripcion={article.descripcion}
-                autor={article.autor}
-                fecha={article.fecha}
-              />
-            ))}
+            {content}
           </div>
         </div>
       </section>
