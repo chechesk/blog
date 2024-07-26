@@ -1,8 +1,14 @@
+require('dotenv').config();
+const {
+  API_MONGO
+} = process.env;
+
 const mongoose = require('mongoose');
+
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb+srv://jgromerom89:Sk12071989@cluster0.usmokk9.mongodb.net/BlogMERN?retryWrites=true&w=majority', {
+    await mongoose.connect(API_MONGO, {
      
       });
     console.log('MongoDB connected...');

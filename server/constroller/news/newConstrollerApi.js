@@ -1,14 +1,16 @@
 const axios = require('axios');
+require('dotenv').config();
+const { API_RAPID, API_URLRAPID, API_rapidapi } = process.env;
 const News = require('../../Model/NewsModel');
 
 const getNews = async (req, res) => {
   const options = {
     method: 'GET',
-    url: 'https://google-news-api1.p.rapidapi.com/search',
+    url: API_URLRAPID,
     params: { language: 'ES' },
     headers: {
-      'x-rapidapi-key': 'c1b6adfde4mshddbb7a8cc282ba5p1b9e20jsn3e934cabecc7',
-      'x-rapidapi-host': 'google-news-api1.p.rapidapi.com'
+      'x-rapidapi-key': API_RAPID,
+      'x-rapidapi-host': API_rapidapi
     }
   };
 
