@@ -58,7 +58,7 @@ const Navbar = () => {
                 About
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/services" className={getLinkClass('/services')}>
                 Services
               </Link>
@@ -67,7 +67,7 @@ const Navbar = () => {
               <Link to="/pricing" className={getLinkClass('/pricing')}>
                 Pricing
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/blog" className={getLinkClass('/blog')}>
                 Blog
