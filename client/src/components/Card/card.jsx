@@ -1,27 +1,24 @@
+// src/components/Card/card.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Article = ({ imagen, titulo, descripcion, id }) => {
+const Article = ({ id, imagen, titulo, descripcion, autor, fecha }) => {
   return (
-    <div className="p-4 md:w-1/3 sm:mb-0 mb-6">
-      <div className="rounded-lg h-64 overflow-hidden">
-        <img alt="content" className="object-cover object-center h-full w-full" src={imagen} />
+    <div className="p-4 md:w-1/3">
+      <Link to={"/blog/"+id }>
+      <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
+        <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={imagen} alt={titulo} />
+        <div className="p-6">
+          <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">{autor}</h2>
+          <h1 className="title-font text-lg font-medium text-white mb-3">{titulo}</h1>
+          <p className="leading-relaxed mb-3">{descripcion}</p>
+          <div className="flex items-center flex-wrap">
+            <span className="text-gray-500 inline-flex items-center md:mb-2 lg:mb-0">
+              {new Date(fecha).toLocaleDateString()}
+            </span>
+          </div>
+        </div>
       </div>
-      <h2 className="text-xl font-medium title-font text-white mt-5">{titulo}</h2>
-      <p className="text-base leading-relaxed mt-2 text-gray-400">{descripcion}</p>
-      <Link to={`/blog/${id}`} className="text-indigo-400 inline-flex items-center mt-3">
-        Learn More
-        <svg
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          className="w-4 h-4 ml-2"
-          viewBox="0 0 24 24"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7"></path>
-        </svg>
       </Link>
     </div>
   );

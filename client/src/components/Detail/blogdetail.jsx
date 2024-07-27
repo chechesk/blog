@@ -1,81 +1,41 @@
-import React from 'react';
+// src/pages/ArticleDetail/ArticleDetail.jsx
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Notfound from '../404/notfound';
+import { fetchArticleById } from '../../redux/Slice/NewsSlice';
 
-const articles = [
-  {
-    id: '1',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'The Catalyzer',
-    contenido: 'Swag shoindxigoitch literally meditation subway tile tumblr cold-pressed. Gastropub street art beard dreamcatcher neutra, ethical XOXO lumbersexual.',
-    autor: 'John Doe',
-    fecha: '2023-01-01',
-  },
-  {
-    id: '2',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'The 400 Blows',
-    contenido: 'Photo booth fam kinfolk cold-pressed sriracha leggings jianbing microdosingled waistcoat.',
-    autor: 'Jane Doe',
-    fecha: '2023-02-01',
-  },
-  {
-    id: '3',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'Shooting Stars',
-    contenido: 'Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee.',
-    autor: 'John Smith',
-    fecha: '2023-03-01',
-  },
-  {
-    id: '4',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'Shooting Stars',
-    contenido: 'Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee.',
-    autor: 'John Smith',
-    fecha: '2023-03-01',
-  },
-  {
-    id: '5',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'Shooting Stars',
-    contenido: 'Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee.',
-    autor: 'John Smith',
-    fecha: '2023-03-01',
-  },
-  {
-    id: '6',
-    imagen: 'https://dummyimage.com/1204x504',
-    titulo: 'Shooting Stars',
-    contenido: 'Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee.',
-    autor: 'John Smith',
-    fecha: '2023-03-01',
-  },
-];
+const ArticleDetail = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const article = useSelector((state) => state.articles.selectedArticle);
+  const status = useSelector((state) => state.articles.status);
+  const error = useSelector((state) => state.articles.error);
 
-const BlogDetail = () => {
-  const { id, name } = useParams();
-  const article = articles.find((article) => article.id === id || article.name === name);
+  useEffect(() => {
+    dispatch(fetchArticleById(id));
+  }, [dispatch, id]);
+
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+
+  if (status === 'failed') {
+    return <p>{error}</p>;
+  }
 
   if (!article) {
-    return <div> <Notfound/> </div>;
+    return <p>No article found</p>;
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-blue-600 mb-4">{article.titulo}</h1>
-      <div className="mb-6">
-        <img alt="content" className="object-cover object-center w-full h-96 rounded-lg" src={article.imagen} />
-      </div>
-      <div className="text-gray-700 text-lg mb-4">
-        <p>{article.contenido}</p>
-      </div>
-      <div className="text-gray-500 text-sm">
-        <p>Escrito por: <span className="font-semibold">{article.autor}</span></p>
-        <p>Fecha: <span className="font-semibold">{article.fecha}</span></p>
-      </div>
+      <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+      <p className="text-gray-600 mb-4">{article.date}</p>
+      <img src={article.image.url} alt={article.title} className="w-full h-auto mb-4" />
+      <p className="mb-4">{article.description}</p>
+      <div dangerouslySetInnerHTML={{ __html: article.body }}></div>
     </div>
   );
 };
 
-export default BlogDetail;
+export default ArticleDetail;

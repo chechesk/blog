@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const newsSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  link: { type: String, required: true },
+  link: { type: String, required: true, unique: true },
   description: { type: String },
   body: { type: String },
   source: { type: String, required: true },

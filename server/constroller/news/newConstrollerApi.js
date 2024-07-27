@@ -20,25 +20,33 @@ const getNews = async (req, res) => {
 
     // Guardar las noticias en la base de datos
     for (const newsItem of newsArray) {
-      const newNews = new News({
-        title: newsItem.title,
-        link: newsItem.link,
-        description: newsItem.description,
-        body: newsItem.body,
-        source: newsItem.source,
-        date: new Date(newsItem.date),
-        language: newsItem.language,
-        hostname: newsItem.hostname,
-        image: {
-          url: newsItem.props?.image,
-          width: newsItem.props?.image_width,
-          height: newsItem.props?.image_height,
-          type: newsItem.props?.image_type,
-        },
-        created: new Date(newsItem.created_at),
-      });
+      try {
+        const existingNews = await News.findOne({ link: newsItem.link });
 
-      await newNews.save();
+        if (!existingNews) {
+          const newNews = new News({
+            title: newsItem.title,
+            link: newsItem.link,
+            description: newsItem.description,
+            body: newsItem.body,
+            source: newsItem.source,
+            date: new Date(newsItem.date),
+            language: newsItem.language,
+            hostname: newsItem.hostname,
+            image: {
+              url: newsItem.props?.image,
+              width: newsItem.props?.image_width,
+              height: newsItem.props?.image_height,
+              type: newsItem.props?.image_type,
+            },
+            created: new Date(newsItem.created_at),
+          });
+
+          await newNews.save();
+        }
+      } catch (error) {
+        console.error(`Error saving item: ${newsItem.link}`, error);
+      }
     }
 
     res.status(response.status).json({ success: true, message: 'News fetched and saved successfully.' });
@@ -48,4 +56,4 @@ const getNews = async (req, res) => {
   }
 };
 
-module.exports =  getNews ;
+module.exports = getNews;

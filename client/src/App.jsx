@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       {!isNotFoundPage && <Navbar />}
-      <div className='max-w-screen-xl mx-auto pt-20 mb-10'>
+      <div className='max-w-screen-auto mx-auto pt-0 mb-10'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
