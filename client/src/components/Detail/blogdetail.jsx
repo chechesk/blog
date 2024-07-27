@@ -30,10 +30,10 @@ const ArticleDetail = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
-      <p className="text-gray-600 mb-4">{article.date}</p>
-      <img src={article.image.url} alt={article.title} className="w-full h-auto mb-4" />
+      <p className="text-gray-600 mb-4">Fecha: {article.date.slice(0,10)}  Hora: {article.date.slice(11,16)}</p>
+      <img src={article.image.url} alt={article.title} className="w-full h-auto mb-4 " />
       <p className="mb-4">{article.description}</p>
-      <div dangerouslySetInnerHTML={{ __html: article.body }}></div>
+      <div className='text-justify my-2' dangerouslySetInnerHTML={{ __html: article.body }}></div>
     </div>
   );
 };
