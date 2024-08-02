@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import './App.css';
+
 import Home from './Pages/home';
 import Navbar from './components/Nav/nav';
 import About from './Pages/about';
@@ -9,15 +9,38 @@ import ArticlesList from './Pages/blog';
 import BlogDetail from './components/Detail/blogdetail';
 import Footer from './components/Footer/footer';
 import Notfound from './components/404/notfound';
+import NavDashboard from './components/Admin/Nav/navDashboard';
+import AdmDashboard from './components/Admin/Dashboard/admdashboard';
+import LoginComponents from './components/login/Login';
+import  supabase from '../src/redux/supabase'
+
 
 function App() {
   const location = useLocation();
   const isNotFoundPage = location.pathname === '/404';
+  const isLoginPage = location.pathname === '/login';
+  const isAdminDashboard = location.pathname === '/blog/dashboard';
+  const [todos, setTodos] = useState([]);
 
+  useEffect(() => {
+    getSpeakers();
+  }, []);
+
+  async function getSpeakers() {
+    const { data, error } = await supabase.from('Speaker').select('*');
+    if (error) {
+      console.error('Error fetching data:', error);
+    } else {
+      console.log(data);
+      setTodos(data);
+    }
+  }
+console.log(todos);
   return (
     <>
-      {!isNotFoundPage && <Navbar />}
-      <div className='max-w-screen-auto mx-auto pt-0 mb-0 h-screen-max '>
+      {!isNotFoundPage && !isLoginPage && !isAdminDashboard && <Navbar />}
+      {isAdminDashboard && <NavDashboard />} {/* Show NavAdmin for dashboard route */}
+      <div>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
@@ -25,11 +48,13 @@ function App() {
           <Route path="/blog" element={<ArticlesList />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/blog/name/:name" element={<BlogDetail />} />
+          <Route path="/login" element={<LoginComponents />} />
+          <Route path="/blog/dashboard" element={<AdmDashboard />} />
           <Route path="/404" element={<Notfound />} />
           <Route path="*" element={<Notfound />} />
         </Routes>
       </div>
-      {!isNotFoundPage && <Footer />}
+      {!isNotFoundPage && !isLoginPage && !isAdminDashboard && <Footer />}
     </>
   );
 }
