@@ -1,10 +1,12 @@
 // src/redux/store.jsx
 import { configureStore } from '@reduxjs/toolkit';
-import articlesReducer from './Slice/NewsSlice';
+import sponsoreReducer from './Slice/NewsSponsore';
+import speakerReducer from './Slice/NewsSpeakers'
 
 const store = configureStore({
   reducer: {
-    articles: articlesReducer,
+    sponsore: sponsoreReducer,
+    speakers: speakerReducer,
   },
 });
 

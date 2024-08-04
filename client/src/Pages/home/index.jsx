@@ -8,12 +8,14 @@ import MediaPartner from '../../components/MediaPartner/mediaPartner';
 import PatrocinioModule from '../../components/Patrocinio/patrocinio';
 
 
-// import BannerComponents from '../../components/Banners/BannerComponents';
+
+
+
 
 export default function Home() {
+
   return (
-    <div className=" mx-auto px-0 py-0 mb-8  ">
-     {/* <BannerComponents /> */}
+    <div className="  ">
       <Carrousel />
       <BannersMp4 />
       <DayCounter />
