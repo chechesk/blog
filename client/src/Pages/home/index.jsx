@@ -1,14 +1,27 @@
 import React from 'react';
 import Carrousel from '../../components/Carrousel/carrousel';
+import BannersMp4 from '../../components/Banners_Mp4/bannersMp4';
+import DayCounter from '../../components/Reloj/counterReloj';
+import SpeakerModule from '../../components/Speakers/speakerModule';
+import StrategicAlliance from '../../components/strategicAlliance/strategicAlliance';
+import MediaPartner from '../../components/MediaPartner/mediaPartner';
+import PatrocinioModule from '../../components/Patrocinio/patrocinio';
+
+
+// import BannerComponents from '../../components/Banners/BannerComponents';
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-0 mb-8 ">
-      <h1 className="text-center text-4xl font-bold mb-4 text-blue-600 m-4">
-        ¡Bienvenidos al Futuro: Tu Portal de Tecnología!
-      </h1>
+    <div className=" mx-auto px-0 py-0 mb-8  ">
+     {/* <BannerComponents /> */}
       <Carrousel />
-      <section>
+      <BannersMp4 />
+      <DayCounter />
+      <PatrocinioModule />
+      <StrategicAlliance />
+      <MediaPartner />
+      <SpeakerModule />
+      <section className=''>
       <p className='text-left'>
           ¡Hola a todos y todas! Bienvenidos a nuestro nuevo blog de tecnología, 
           <span className="font-semibold text-blue-600"> TecnoHorizonte</span>. 

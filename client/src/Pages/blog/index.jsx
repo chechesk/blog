@@ -1,8 +1,9 @@
 // src/pages/ArticlesList/ArticlesList.jsx
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchArticles, setPage } from '../../redux/Slice/NewsSlice';
 import Article from '../../components/Card/card';
+import { fetchArticles } from '../../redux/Reducer/NewsSlice';
+import { setPage } from '../../redux/Slice/NewsSlice';
 
 const ArticlesList = () => {
   const dispatch = useDispatch();

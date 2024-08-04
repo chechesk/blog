@@ -12,7 +12,7 @@ import Notfound from './components/404/notfound';
 import NavDashboard from './components/Admin/Nav/navDashboard';
 import AdmDashboard from './components/Admin/Dashboard/admdashboard';
 import LoginComponents from './components/login/Login';
-import  supabase from '../src/redux/supabase'
+// import  supabase from '../src/redux/supabase'
 
 
 function App() {
@@ -22,20 +22,20 @@ function App() {
   const isAdminDashboard = location.pathname === '/blog/dashboard';
   const [todos, setTodos] = useState([]);
 
-  useEffect(() => {
-    getSpeakers();
-  }, []);
+//   useEffect(() => {
+//     getSpeakers();
+//   }, []);
 
-  async function getSpeakers() {
-    const { data, error } = await supabase.from('Speaker').select('*');
-    if (error) {
-      console.error('Error fetching data:', error);
-    } else {
-      console.log(data);
-      setTodos(data);
-    }
-  }
-console.log(todos);
+//   async function getSpeakers() {
+//     const { data, error } = await supabase.from('Speaker').select('*');
+//     if (error) {
+//       console.error('Error fetching data:', error);
+//     } else {
+//       console.log(data);
+//       setTodos(data);
+//     }
+//   }
+// console.log(todos);
   return (
     <>
       {!isNotFoundPage && !isLoginPage && !isAdminDashboard && <Navbar />}

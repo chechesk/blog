@@ -2,7 +2,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchArticleById } from '../../redux/Slice/NewsSlice';
+import { fetchArticleById } from '../../redux/Reducer/NewsSlice';
+
 
 const ArticleDetail = () => {
   const { id } = useParams();

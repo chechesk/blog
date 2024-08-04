@@ -18,11 +18,15 @@ const Navbar = () => {
   return (
     <nav className="bg-white border border-gray-200 dark:border-gray-700 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 shadow">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
-        <Link to="/" className="flex items-center">
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            Website
-          </span>
-        </Link>
+      <Link to="/" className="flex items-center">
+        <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+          <img 
+            src="https://cgsbrasil.com/wp-content/uploads/2024/06/recifeLOGOgrafXG-02-2048x1291.png" 
+            alt="Recife Logo" 
+            className="h-28 w-auto" // Adjust height and width as needed
+          />
+        </span>
+      </Link>
 
         <div className="flex items-center">
           <button
