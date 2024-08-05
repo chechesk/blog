@@ -4,8 +4,9 @@ import BannersMp4 from '../../components/Banners_Mp4/bannersMp4';
 import DayCounter from '../../components/Reloj/counterReloj';
 import SpeakerModule from '../../components/Speakers/speakerModule';
 import StrategicAlliance from '../../components/strategicAlliance/strategicAlliance';
-import MediaPartner from '../../components/MediaPartner/mediaPartner';
+
 import PatrocinioModule from '../../components/Patrocinio/patrocinio';
+import MediaModule from '../../components/MediaPartner/MediaPartnerComponents';
 
 
 
@@ -15,21 +16,15 @@ import PatrocinioModule from '../../components/Patrocinio/patrocinio';
 export default function Home() {
 
   return (
-    <div className="  ">
+    <div className=" mb-8 ">
       <Carrousel />
       <BannersMp4 />
       <DayCounter />
       <PatrocinioModule />
       <StrategicAlliance />
-      <MediaPartner />
+      <MediaModule />
       <SpeakerModule />
-      <section className=''>
-      <p className='text-left'>
-          ¡Hola a todos y todas! Bienvenidos a nuestro nuevo blog de tecnología, 
-          <span className="font-semibold text-blue-600"> TecnoHorizonte</span>. 
-          Estamos emocionados de iniciar este viaje con ustedes y de compartir nuestra pasión por el mundo de la tecnología.
-        </p>
-      </section>
+
     </div>
   );
 }

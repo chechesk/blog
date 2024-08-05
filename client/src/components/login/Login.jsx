@@ -1,30 +1,42 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn } from '../../redux/Reducer/Auth'; // Asegúrate de que la ruta a tu authSlice sea correcta
+import { useNavigate } from "react-router-dom";
+import supabase from '../../redux/supabase';
 
 export default function LoginComponents() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useNavigate()
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-       try {
-         const response = await axios.post('http://localhost:3000/login', { email, password });
-         const token = response.data.token;
-         setToken(token);
-       } catch (err) {
-         setError('Invalid email or password');
-       }
-     };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    
+    const { user, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setError(error.message);
+    } else {
+      router('/blog/dashboard')
+      
+      // Redirigir al usuario a la página principal o hacer alguna otra acción
+    }
+  };
+
 
   return (
     <div>
-      {/*
-  Heads up! 👋
 
-  Plugins:
-    - @tailwindcss/forms
-*/}
 
       <section className="bg-white">
         <div className="lg:grid lg:min-h-dvh lg:max-h-dvh lg:grid-cols-12">
@@ -95,7 +107,7 @@ export default function LoginComponents() {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-6 gap-6">
+              <form onSubmit={handleLogin} className="mt-8 grid grid-cols-6 gap-6">
 
               {error && <p className="text-red-500 mb-4">{error}</p>}
                 <div className="col-span-6">
@@ -105,8 +117,10 @@ export default function LoginComponents() {
                     type="email"
                     id="Email"
                     name="email"
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    required
                   />
                 </div>
 
@@ -117,8 +131,10 @@ export default function LoginComponents() {
                     type="password"
                     id="Password"
                     name="password"
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    required
                   />
                 </div>
 
@@ -148,17 +164,18 @@ export default function LoginComponents() {
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   
-                  <button
-                    className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-                  >
-                    Login
-                  </button>
+                  <button 
+                  className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                  disabled={status === 'loading'}
+                   >
+            Sign In
+          </button>
                   <button
                     className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                   >
                     Back
                   </button>
-             
+                  {loading ? 'Logging in...' : 'Login'}
                 </div>
               </form>
             </div>

@@ -5,8 +5,8 @@ import Home from './Pages/home';
 import Navbar from './components/Nav/nav';
 import About from './Pages/about';
 import Contact from './Pages/contact';
-// import ArticlesList from './Pages/blog';
-// import BlogDetail from './components/Detail/blogdetail';
+import ArticlesList from './Pages/blog';
+import BlogDetail from './components/Detail/blogdetail';
 import Footer from './components/Footer/footer';
 import Notfound from './components/404/notfound';
 import NavDashboard from './components/Admin/Nav/navDashboard';
@@ -30,9 +30,9 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
-          {/* <Route path="/blog" element={<ArticlesList />} />
+          <Route path="/blog" element={<ArticlesList />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
-          <Route path="/blog/name/:name" element={<BlogDetail />} /> */}
+          <Route path="/blog/name/:name" element={<BlogDetail />} />
           <Route path="/login" element={<LoginComponents />} />
           <Route path="/blog/dashboard" element={<AdmDashboard />} />
           <Route path="/404" element={<Notfound />} />

@@ -2,25 +2,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Article from '../../components/Card/card';
-import { fetchArticles } from '../../redux/Reducer/NewsSlice';
-import { setPage } from '../../redux/Slice/NewsSlice';
+import { fetchNew} from '../../redux/Reducer/NewsBlog';
 
 const ArticlesList = () => {
   const dispatch = useDispatch();
-  const articles = useSelector((state) => state.articles.articles);
-  const articleStatus = useSelector((state) => state.articles.status);
-  const error = useSelector((state) => state.articles.error);
-  const page = useSelector((state) => state.articles.page);
-  const perPage = useSelector((state) => state.articles.perPage);
-  const totalArticles = useSelector((state) => state.articles.totalArticles);
+  const articles = useSelector((state) => state.new.articles);
+  const articleStatus = useSelector((state) => state.new.status);
+  const error = useSelector((state) => state.new.error);
+  const page = useSelector((state) => state.new.page);
+  const perPage = useSelector((state) => state.new.perPage);
+  const totalArticles = useSelector((state) => state.new.totalArticles);
 
   useEffect(() => {
-    dispatch(fetchArticles({ page, perPage }));
-  }, [page, perPage, dispatch]);
+    dispatch(fetchNew());
+  }, [dispatch]);
 
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= Math.ceil(totalArticles / perPage)) {
-      dispatch(setPage(newPage));
+      dispatch();
     }
   };
 
@@ -29,24 +28,26 @@ const ArticlesList = () => {
   if (articleStatus === 'loading') {
     content = <p>Loading...</p>;
   } else if (articleStatus === 'succeeded') {
-    content = articles.map((article) => (
-      <Article
-        key={article._id}
-        id={article._id}
-        imagen={article.image.url}
-        titulo={article.title}
-        descripcion={article.description}
-        autor={article.source}
-        fecha={article.date}
-      />
-    ));
+    content = articles
+      .slice((page - 1) * perPage, page * perPage)
+      .map((article) => (
+        <Article
+          key={article.id}
+          id={article.id}
+          imagen={article.Image}
+          titulo={article.Content}
+          descripcion={article.content}
+          autor={article.author}
+          fecha={article.Fecha}
+        />
+      ));
   } else if (articleStatus === 'failed') {
-    content = <p>{error}</p>;
+    content = <p>Error: {error}</p>;
   }
 
   return (
     <div>
-      <section className="text-gray-400 bg-gray-900 body-font mx-a">
+      <section className="text-gray-400 bg-gray-900 body-font mx-auto">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col">
             <div className="h-1 bg-gray-800 rounded overflow-hidden">
