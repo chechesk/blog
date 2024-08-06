@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { signIn } from '../../redux/Reducer/Auth'; // Asegúrate de que la ruta a tu authSlice sea correcta
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import supabase from '../../redux/supabase';
 
 export default function LoginComponents() {
@@ -17,7 +15,7 @@ export default function LoginComponents() {
     setError('');
 
     
-    const { user, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -27,8 +25,8 @@ export default function LoginComponents() {
     if (error) {
       setError(error.message);
     } else {
-      router('/blog/dashboard')
-      
+      sessionStorage.setItem('supabase.auth.session', JSON.stringify(data.session));
+      router('/admin/dashboard')
       // Redirigir al usuario a la página principal o hacer alguna otra acción
     }
   };
@@ -109,7 +107,7 @@ export default function LoginComponents() {
 
               <form onSubmit={handleLogin} className="mt-8 grid grid-cols-6 gap-6">
 
-              {error && <p className="text-red-500 mb-4">{error}</p>}
+              {error && <p className="text-red-500 mb-4 text-nowrap">{error}</p>}
                 <div className="col-span-6">
                   <label htmlFor="Email" className="block text-sm font-medium text-gray-700"> Email </label>
 
@@ -164,18 +162,20 @@ export default function LoginComponents() {
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   
-                  <button 
-                  className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-                  disabled={status === 'loading'}
-                   >
-            Sign In
-          </button>
+                <button 
+              type="submit"
+              className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+              disabled={loading}
+            >
+              {loading ? 'Signing In...' : 'Sign In'}
+            </button>
+          <Link to="/">
                   <button
                     className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                   >
                     Back
                   </button>
-                  {loading ? 'Logging in...' : 'Login'}
+                  </Link>
                 </div>
               </form>
             </div>

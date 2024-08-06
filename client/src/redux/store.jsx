@@ -5,6 +5,7 @@ import speakerReducer from './Slice/NewsSpeakers'
 import mediaReducer from './Slice/NewsMedia'
 import newReducer from './Slice/NewsBlog'
 import bannerReducer from './Slice/BannerHome'
+import strategyReducer from './Slice/NewsStrategy'
 import authReducer from './Slice/Auth'
 
 const store = configureStore({
@@ -14,6 +15,7 @@ const store = configureStore({
     media: mediaReducer,
     new: newReducer,
     banner: bannerReducer,
+    strategy: strategyReducer,
     auth: authReducer,
   },
 });

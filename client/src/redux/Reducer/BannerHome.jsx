@@ -8,3 +8,26 @@ export const fetchBaner = createAsyncThunk('banner/fetchBanner', async (_, thunk
   if (error) throw new Error(error.message);
   return data;
 });
+
+export const updateBanner = createAsyncThunk('banner/updateBanner', async ({ id, updates }) => {
+  const { data, error } = await supabase
+    .from('BannerHome')
+    .update(updates)
+    .eq('id', id)
+    .select();
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data[0];
+});
+
+export const deleteBanner = createAsyncThunk('banner/deleteBanner', async (id) => {
+  const { error } = await supabase
+    .from('BannerHome')
+    .delete()
+    .eq('id', id);
+  if (error) {
+    throw new Error(error.message);
+  }
+  return id;
+});

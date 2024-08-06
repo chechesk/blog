@@ -18,3 +18,26 @@ export const fetchSpeakers = createAsyncThunk(
       }
     }
   );
+
+  export const updateSpeakers = createAsyncThunk('speakers/updateSpeakers', async ({ id, updates }) => {
+    const { data, error } = await supabase
+      .from('Speaker')
+      .update(updates)
+      .eq('id', id)
+      .select();
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data[0];
+  });
+  
+  export const deleteSpeakers = createAsyncThunk('speakers/deleteSpeakers', async (id) => {
+    const { error } = await supabase
+      .from('Speaker')
+      .delete()
+      .eq('id', id);
+    if (error) {
+      throw new Error(error.message);
+    }
+    return id;
+  });

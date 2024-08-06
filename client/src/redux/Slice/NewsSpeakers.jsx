@@ -1,19 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchSpeakers } from "../Reducer/NewsSpeakers";
+import { createSlice } from '@reduxjs/toolkit';
+import { deleteSpeakers, fetchSpeakers, updateSpeakers } from '../Reducer/NewsSpeakers';
 
-const newsSpeakersSlice = createSlice({
-  name: 'newsSpeakers',
+const speakersSlice = createSlice({
+  name: 'speakers',
   initialState: {
     speakers: [],
     loading: false,
     error: null,
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchSpeakers.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(fetchSpeakers.fulfilled, (state, action) => {
         state.loading = false;
@@ -21,9 +19,17 @@ const newsSpeakersSlice = createSlice({
       })
       .addCase(fetchSpeakers.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
+      })
+      .addCase(updateSpeakers.fulfilled, (state, action) => {
+        state.speakers = state.speakers.map((speaker) =>
+          speaker.id === action.payload.id ? action.payload : speaker
+        );
+      })
+      .addCase(deleteSpeakers.fulfilled, (state, action) => {
+        state.speakers = state.speakers.filter(speaker => speaker.id !== action.payload);
       });
   },
 });
 
-export default newsSpeakersSlice.reducer;
+export default speakersSlice.reducer;
