@@ -32,7 +32,7 @@ export const fetchSpeakers = createAsyncThunk(
   });
   
   export const deleteSpeakers = createAsyncThunk('speakers/deleteSpeakers', async (id) => {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('Speaker')
       .delete()
       .eq('id', id);
