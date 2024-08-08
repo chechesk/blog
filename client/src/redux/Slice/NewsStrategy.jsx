@@ -4,7 +4,7 @@ import { fetchStrategy } from "../Reducer/NewsStrategy";
 const NewStrategySlice = createSlice({
   name: 'strategy',
   initialState: {
-    sponsore: {}, // Cambiar a objeto para manejar múltiples categorías
+    strategy: [], // Cambiar a objeto para manejar múltiples categorías
     loading: false,
     error: null,
   },
@@ -17,7 +17,7 @@ const NewStrategySlice = createSlice({
       })
       .addCase(fetchStrategy.fulfilled, (state, action) => {
         state.loading = false;
-        state.sponsore[action.payload.Type] = action.payload.data; // Almacenar datos por tipo
+        state.speakers = action.payload;
       })
       .addCase(fetchStrategy.rejected, (state, action) => {
         state.loading = false;

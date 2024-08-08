@@ -17,6 +17,8 @@ export default function SpeakersDash() {
     Pais: '',
     Image: '',
   });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchField, setSearchField] = useState('Nombre');
 
   useEffect(() => {
     dispatch(fetchSpeakers());
@@ -52,6 +54,14 @@ export default function SpeakersDash() {
     await dispatch(deleteSpeakers(id));
   };
 
+  const handleClearSearch = () => {
+    setSearchQuery('');
+  };
+
+  const filteredSpeakers = speakers.filter((speaker) =>
+    (speaker[searchField] || '').toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading === 'loading') {
     return <div>Loading...</div>;
   }
@@ -63,6 +73,31 @@ export default function SpeakersDash() {
   return (
     <div className="p-8 ml-12">
       <h1 className="text-2xl font-bold mb-4 text-center">Panel de Speakers</h1>
+      <div className="mb-4 flex">
+        <input
+          type="text"
+          placeholder={`Search by ${searchField}`}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="p-2 border rounded w-full"
+        />
+        <select
+          value={searchField}
+          onChange={(e) => setSearchField(e.target.value)}
+          className="ml-2 p-2 border rounded"
+        >
+          <option value="Nombre">Name</option>
+          <option value="Cargo">Role</option>
+          <option value="Empresa">Company</option>
+          <option value="Pais">Country</option>
+        </select>
+        <button
+          onClick={handleClearSearch}
+          className="ml-2 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+        >
+          Clear
+        </button>
+      </div>
       <section>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -83,7 +118,7 @@ export default function SpeakersDash() {
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              {speakers.map((item) => (
+              {filteredSpeakers.map((item) => (
                 <tr key={item.id}>
                   <td className="px-4 py-2 ">
                     <label className="sr-only" htmlFor={`Row${item.id}`}>Row {item.id}</label>

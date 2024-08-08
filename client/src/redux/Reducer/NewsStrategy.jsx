@@ -1,15 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import supabase from '../supabase'; // Asegúrate de importar correctamente
 
-export const fetchStrategy = createAsyncThunk('strategy/fetchStrategy', async (_, thunkAPI) => {
-  const state = thunkAPI.getState();
-  const { page, perPage } = state.new;
-  const { data, error } = await supabase
-    .from('Strategy')
-    .select('*')
-  if (error) throw new Error(error.message);
-  return data;
-});
+  export const fetchStrategy = createAsyncThunk('strategy/fetchStrategy', async (_, thunkAPI) => {
+    const { data, error } = await supabase
+      .from('Strategy')
+      .select('*');
+    if (error) throw new Error(error.message);
+    return data;
+  });
 
 
 export const fetchStrategyById = createAsyncThunk('strategy/fetchStrategyById', async (id, { rejectWithValue }) => {

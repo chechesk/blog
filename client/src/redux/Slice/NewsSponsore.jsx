@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchSponsore } from "../Reducer/NewsSponsore";
+import { deleteSponsore, editSponsore, fetchSponsore } from "../Reducer/NewsSponsore";
 
 const NewSponsoreSlice = createSlice({
   name: 'sponsore',
@@ -22,6 +22,16 @@ const NewSponsoreSlice = createSlice({
       .addCase(fetchSponsore.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(editSponsore.fulfilled, (state, action) => {
+        const updatedSponsor = action.payload;
+        state.sponsore = state.sponsore.map((sponsor) => 
+          sponsor.id === updatedSponsor.id ? updatedSponsor : sponsor
+        );
+      })
+      .addCase(deleteSponsore.fulfilled, (state, action) => {
+        const id = action.meta.arg;
+        state.sponsore = state.sponsore.filter((sponsor) => sponsor.id !== id);
       });
   },
 });

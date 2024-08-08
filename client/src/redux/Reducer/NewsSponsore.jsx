@@ -24,3 +24,17 @@ export const fetchSponsore = createAsyncThunk(
     }
   }
 );
+
+// Edit sponsor
+export const editSponsore = createAsyncThunk('sponsore/editSponsore', async (sponsor) => {
+  const { data, error } = await supabase.from('sponsore').update(sponsor).eq('id', sponsor.id);
+  if (error) throw error;
+  return data;
+});
+
+// Delete sponsor
+export const deleteSponsore = createAsyncThunk('sponsore/deleteSponsore', async (id) => {
+  const { data, error } = await supabase.from('sponsore').delete().eq('id', id);
+  if (error) throw error;
+  return data;
+});

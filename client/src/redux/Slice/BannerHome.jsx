@@ -22,10 +22,20 @@ const bannerSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+      .addCase(updateBanner.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(updateBanner.fulfilled, (state, action) => {
-        state.banners = state.banners.map((banner) =>
-          banner.id === action.payload.id ? action.payload : banner
-        );
+        state.status = 'succeeded';
+        const updatedBanner = action.payload;
+        const existingBannerIndex = state.banners.findIndex(banner => banner.id === updatedBanner.id);
+        if (existingBannerIndex >= 0) {
+          state.banners[existingBannerIndex] = updatedBanner;
+        }
+      })
+      .addCase(updateBanner.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       })
       .addCase(deleteBanner.fulfilled, (state, action) => {
         state.banners = state.banners.filter(banner => banner.id !== action.payload);

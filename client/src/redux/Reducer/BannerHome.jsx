@@ -15,9 +15,15 @@ export const updateBanner = createAsyncThunk('banner/updateBanner', async ({ id,
     .update(updates)
     .eq('id', id)
     .select();
+
   if (error) {
     throw new Error(error.message);
   }
+
+  if (!data || data.length === 0) {
+    throw new Error('No data returned from the update operation');
+  }
+
   return data[0];
 });
 

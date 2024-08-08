@@ -127,7 +127,7 @@ export default function NavDashboard() {
 
               <li>
                 <a
-                  href="/admin/dashboard/patrocinio"
+                  href="/admin/dashboard/media"
                   className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
                   <svg
@@ -153,7 +153,7 @@ export default function NavDashboard() {
 
               <li>
                 <a
-                  href="/admin/dashboard/patrocinio"
+                  href="/admin/dashboard/strategy"
                   className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -169,7 +169,7 @@ export default function NavDashboard() {
 
               <li>
                 <a
-                  href="/admin/dashboard/patrocinio"
+                  href="/admin/dashboard/profile"
                   className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
                   <svg

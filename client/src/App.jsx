@@ -17,8 +17,9 @@ import ProtectedRoute from './components/ProtectRouter/protector';
 import SpeakersDash from './components/Admin/Components/Speakers/speakersDash';
 import PatrocinioDash from './components/Admin/Components/Patrocinadores/patrocinioDash';
 import MediaDash from './components/Admin/Components/Media/mediaDash';
-import StrategyDash from './components/Admin/Components/Speakers/speakersDash';
+import StrategyDash from './components/Admin/Components/Strategy/strategyDash';
 import CarrouselDash from './components/Admin/Components/Carrousel/carrouselDash';
+import AcountDash from './components/Admin/Account/accountDash';
 
 function App() {
   const location = useLocation();
@@ -45,6 +46,7 @@ function App() {
           <Route path="/admin/dashboard/patrocinio" element={<ProtectedRoute element={<PatrocinioDash />} />} />
           <Route path="/admin/dashboard/strategy" element={<ProtectedRoute element={<StrategyDash />} />} />
           <Route path="/admin/dashboard/media" element={<ProtectedRoute element={<MediaDash />} />} />
+          <Route path="/admin/dashboard/profile" element={<ProtectedRoute element={<AcountDash />} />} />
           <Route path="/404" element={<Notfound />} />
           <Route path="*" element={<Notfound />} />
         </Routes>

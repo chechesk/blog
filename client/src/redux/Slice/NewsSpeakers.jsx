@@ -8,6 +8,7 @@ const speakersSlice = createSlice({
     loading: false,
     error: null,
   },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchSpeakers.pending, (state) => {

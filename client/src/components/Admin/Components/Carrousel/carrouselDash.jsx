@@ -10,6 +10,7 @@ export default function CarrouselDash() {
   const { banners, status, error } = useSelector((state) => state.banner);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState({
+    id: null,
     Title: '',
     SubTitle: '',
     description: '',
@@ -36,6 +37,7 @@ export default function CarrouselDash() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedItem({
+      id: null,
       Title: '',
       SubTitle: '',
       description: '',
