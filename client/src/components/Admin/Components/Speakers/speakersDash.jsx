@@ -5,6 +5,18 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root'); // Necesario para accesibilidad
 
+const countryFlags = {
+  "Argentina": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
+  "Brasil": "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
+  "Peru": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Peru.svg",
+  "Chile": "https://upload.wikimedia.org/wikipedia/commons/7/78/Flag_of_Chile.svg",
+  "Uruguay": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg",
+  "Francia": "https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg",
+  "USA": "https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg",
+  "United Kingdom": "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg",
+  "Ucrania": "https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg"
+};
+
 export default function SpeakersDash() {
   const dispatch = useDispatch();
   const { speakers, loading, error } = useSelector((state) => state.speakers);
@@ -79,7 +91,7 @@ export default function SpeakersDash() {
           placeholder={`Search by ${searchField}`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2 border rounded w-full"
+          className="p-2 border rounded w-[80%]"
         />
         <select
           value={searchField}
@@ -97,6 +109,14 @@ export default function SpeakersDash() {
         >
           Clear
         </button>
+        <a href="/admin/dashboard/speakers/add">
+            <button
+              type="button"
+              className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
+            >
+              Add Speakers
+            </button>
+      </a>
       </div>
       <section>
         <div className="overflow-x-auto">
@@ -131,7 +151,9 @@ export default function SpeakersDash() {
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.Apellido || 'Apellido'}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.Cargo || 'Cargo'}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.Empresa || 'Empresa'}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.Pais || 'Pais'}</td>
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                    <img src={countryFlags[item.Pais]} alt={item.Pais} className='h-6 w-10 rounded' />
+                  </td>
                   <td className="whitespace-nowrap px-4 py-2">
                     <button
                       onClick={() => openModal(item)}
@@ -222,12 +244,16 @@ export default function SpeakersDash() {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">Country</label>
-                <input
-                  type="text"
+                <select
                   value={selectedItem.Pais || ''}
                   onChange={(e) => setSelectedItem({ ...selectedItem, Pais: e.target.value })}
                   className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
+                >
+                  <option value="">Select a country</option>
+                  {Object.keys(countryFlags).map((country) => (
+                    <option key={country} value={country}>{country}</option>
+                  ))}
+                </select>
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">Image</label>

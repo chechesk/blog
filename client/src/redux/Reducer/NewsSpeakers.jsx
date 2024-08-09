@@ -19,6 +19,13 @@ export const fetchSpeakers = createAsyncThunk(
     }
   );
 
+  export const addSpeaker = createAsyncThunk('speakers/addSpeaker', async (speakerData) => {
+    const { data, error } = await supabase.from('Speaker').insert([speakerData]);
+    if (error) throw error;
+    return data[0];
+  });
+  
+
   export const updateSpeakers = createAsyncThunk('speakers/updateSpeakers', async ({ id, updates }) => {
     const { data, error } = await supabase
       .from('Speaker')

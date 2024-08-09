@@ -1,10 +1,14 @@
+// src/redux/Reducer/NewSponsoreSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteSponsore, editSponsore, fetchSponsore } from "../Reducer/NewsSponsore";
+import { addSponsore, deleteSponsore, editSponsore, fetchSponsore, fetchTypes } from "../Reducer/NewsSponsore";
+
 
 const NewSponsoreSlice = createSlice({
   name: 'sponsore',
   initialState: {
-    sponsore: {}, // Cambiar a objeto para manejar múltiples categorías
+    sponsore: [], // Almacenar datos como un array
+    types: [], // Añadir un estado para los tipos
+    typesLoading: false,
     loading: false,
     error: null,
   },
@@ -17,21 +21,37 @@ const NewSponsoreSlice = createSlice({
       })
       .addCase(fetchSponsore.fulfilled, (state, action) => {
         state.loading = false;
-        state.sponsore[action.payload.Type] = action.payload.data; // Almacenar datos por tipo
+        // Filtrar los patrocinadores que no son del tipo actual y añadir los nuevos
+        const filteredSponsors = state.sponsore.filter(sponsor => sponsor.Type !== action.payload.Type);
+        state.sponsore = [...filteredSponsors, ...action.payload.data.map(sponsor => ({ ...sponsor, Type: action.payload.Type }))];
       })
       .addCase(fetchSponsore.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(fetchTypes.pending, (state) => {
+        state.typesLoading = true;
+      })
+      .addCase(fetchTypes.fulfilled, (state, action) => {
+        state.typesLoading = false;
+        state.types = action.payload;
+      })
+      .addCase(fetchTypes.rejected, (state, action) => {
+        state.typesLoading = false;
+        state.error = action.payload;
+      })
       .addCase(editSponsore.fulfilled, (state, action) => {
         const updatedSponsor = action.payload;
-        state.sponsore = state.sponsore.map((sponsor) => 
-          sponsor.id === updatedSponsor.id ? updatedSponsor : sponsor
-        );
+        const index = state.sponsore.findIndex(sponsor => sponsor.id === updatedSponsor.id);
+        if (index !== -1) {
+          state.sponsore[index] = updatedSponsor;
+        }
+      })
+      .addCase(addSponsore.fulfilled, (state, action) => {
+        state.sponsore.push(action.payload);
       })
       .addCase(deleteSponsore.fulfilled, (state, action) => {
-        const id = action.meta.arg;
-        state.sponsore = state.sponsore.filter((sponsor) => sponsor.id !== id);
+        state.sponsore = state.sponsore.filter(sponsor => sponsor.id !== action.payload);
       });
   },
 });

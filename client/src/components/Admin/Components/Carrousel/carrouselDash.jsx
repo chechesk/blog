@@ -10,7 +10,6 @@ export default function CarrouselDash() {
   const { banners, status, error } = useSelector((state) => state.banner);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState({
-    id: null,
     Title: '',
     SubTitle: '',
     description: '',
@@ -37,7 +36,6 @@ export default function CarrouselDash() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedItem({
-      id: null,
       Title: '',
       SubTitle: '',
       description: '',
@@ -70,7 +68,17 @@ export default function CarrouselDash() {
 
   return (
     <div className="p-8 ml-12">
-      <h1 className="text-2xl font-bold mb-4">Carrousel Home Panel</h1>
+      <div className='flex'>
+      <h1 className="text-2xl font-bold mb-4">Carrousel Home Panel</h1>     
+      <a href="/admin/dashboard/banner/add">
+            <button
+              type="button"
+              className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
+            >
+              Add Banner
+            </button>
+      </a>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="ltr:text-left rtl:text-right">

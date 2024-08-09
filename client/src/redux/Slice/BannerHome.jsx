@@ -38,8 +38,9 @@ const bannerSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(deleteBanner.fulfilled, (state, action) => {
+        state.loading = false;
         state.banners = state.banners.filter(banner => banner.id !== action.payload);
-      });
+      })
   },
 });
 

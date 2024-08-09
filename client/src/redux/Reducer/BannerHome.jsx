@@ -15,20 +15,14 @@ export const updateBanner = createAsyncThunk('banner/updateBanner', async ({ id,
     .update(updates)
     .eq('id', id)
     .select();
-
   if (error) {
     throw new Error(error.message);
   }
-
-  if (!data || data.length === 0) {
-    throw new Error('No data returned from the update operation');
-  }
-
   return data[0];
 });
 
 export const deleteBanner = createAsyncThunk('banner/deleteBanner', async (id) => {
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from('BannerHome')
     .delete()
     .eq('id', id);
@@ -36,4 +30,10 @@ export const deleteBanner = createAsyncThunk('banner/deleteBanner', async (id) =
     throw new Error(error.message);
   }
   return id;
+});
+
+export const addBanner = createAsyncThunk('banner/addBanner', async (form) => {
+  const { data, error } = await supabase.from('BannerHome').insert([form]).select();
+  if (error) throw new Error(error.message);
+  return data[0];
 });

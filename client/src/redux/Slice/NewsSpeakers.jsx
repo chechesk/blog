@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deleteSpeakers, fetchSpeakers, updateSpeakers } from '../Reducer/NewsSpeakers';
+import { addSpeaker, deleteSpeakers, fetchSpeakers, updateSpeakers } from '../Reducer/NewsSpeakers';
 
 const speakersSlice = createSlice({
   name: 'speakers',
@@ -11,6 +11,17 @@ const speakersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    .addCase(addSpeaker.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(addSpeaker.fulfilled, (state, action) => {
+      state.loading = false;
+      state.speakers.push(action.payload);
+    })
+    .addCase(addSpeaker.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    })
       .addCase(fetchSpeakers.pending, (state) => {
         state.loading = true;
       })
@@ -28,6 +39,7 @@ const speakersSlice = createSlice({
         );
       })
       .addCase(deleteSpeakers.fulfilled, (state, action) => {
+        state.loading = false;
         state.speakers = state.speakers.filter(speaker => speaker.id !== action.payload);
       });
   },

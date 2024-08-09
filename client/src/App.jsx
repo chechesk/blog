@@ -20,6 +20,9 @@ import MediaDash from './components/Admin/Components/Media/mediaDash';
 import StrategyDash from './components/Admin/Components/Strategy/strategyDash';
 import CarrouselDash from './components/Admin/Components/Carrousel/carrouselDash';
 import AcountDash from './components/Admin/Account/accountDash';
+import AddSpeakers from './components/Admin/Components/Speakers/Add/addSpeakers';
+import AddCarrousel from './components/Admin/Components/Carrousel/Add/addCarrousel';
+import AddPatrocinado from './components/Admin/Components/Patrocinadores/Add/addPatrocinado';
 
 function App() {
   const location = useLocation();
@@ -42,8 +45,11 @@ function App() {
           <Route path="/login" element={<LoginComponents />} />
           <Route path="/admin/dashboard" element={<ProtectedRoute element={<AdmDashboard />} />} />
           <Route path="/admin/dashboard/banner" element={<ProtectedRoute element={<CarrouselDash />} />} />
+          <Route path="/admin/dashboard/banner/add" element={<ProtectedRoute element={<AddCarrousel />} />} />
           <Route path="/admin/dashboard/speakers" element={<ProtectedRoute element={<SpeakersDash />} />} />
+          <Route path="/admin/dashboard/speakers/add" element={<ProtectedRoute element={<AddSpeakers/>} />} />
           <Route path="/admin/dashboard/patrocinio" element={<ProtectedRoute element={<PatrocinioDash />} />} />
+          <Route path="/admin/dashboard/patrocinio/add" element={<ProtectedRoute element={<AddPatrocinado />} />} />
           <Route path="/admin/dashboard/strategy" element={<ProtectedRoute element={<StrategyDash />} />} />
           <Route path="/admin/dashboard/media" element={<ProtectedRoute element={<MediaDash />} />} />
           <Route path="/admin/dashboard/profile" element={<ProtectedRoute element={<AcountDash />} />} />

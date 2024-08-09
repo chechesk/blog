@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchMedia } from "../Reducer/NewsMedia";
+import { deleteMedia, fetchMedia, updateMedia } from "../Reducer/NewsMedia";
 
 const newsMediaSlice = createSlice({
   name: 'newsmedia',
@@ -22,6 +22,15 @@ const newsMediaSlice = createSlice({
       .addCase(fetchMedia.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })      
+      .addCase(updateMedia.fulfilled, (state, action) => {
+        state.media = state.media.map((media) =>
+          media.id === action.payload.id ? action.payload : media
+        );
+      })
+      .addCase(deleteMedia.fulfilled, (state, action) => {
+        state.loading = false;
+        state.media = state.media.filter(media => media.id !== action.payload);
       });
   },
 });

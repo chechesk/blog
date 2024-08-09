@@ -1,3 +1,4 @@
+// src/components/PatrocinioModule.jsx
 import React from 'react';
 import SponsoreList from './sponsorList'; // Asegúrate de importar correctamente
 
