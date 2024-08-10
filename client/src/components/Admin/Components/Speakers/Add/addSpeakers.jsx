@@ -23,13 +23,14 @@ export default function AddSpeakers() {
     Empresa: '',
     Pais: '',
     Image: '',
+    Active: false, // Inicializado como false
   });
 
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
   };
 
   const validateForm = () => {
@@ -54,6 +55,7 @@ export default function AddSpeakers() {
         Empresa: '',
         Pais: '',
         Image: '',
+        Active: false,
       });
       setErrors({});
     }
@@ -133,6 +135,16 @@ export default function AddSpeakers() {
               className={`mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm ${errors.Image && 'border-red-500'}`}
             />
             {errors.Image && <p className="text-red-500 text-xs mt-1">{errors.Image}</p>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Active</label>
+            <input
+              type="checkbox"
+              name="Active"
+              checked={form.Active}
+              onChange={handleInputChange}
+              className="mt-1"
+            />
           </div>
           <div className="flex justify-end">
             <button

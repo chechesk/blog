@@ -28,6 +28,7 @@ export default function SpeakersDash() {
     Empresa: '',
     Pais: '',
     Image: '',
+    Active: false, // Inicializado como false
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [searchField, setSearchField] = useState('Nombre');
@@ -50,6 +51,7 @@ export default function SpeakersDash() {
       Empresa: '',
       Pais: '',
       Image: '',
+      Active: false,
     });
   };
 
@@ -262,6 +264,15 @@ export default function SpeakersDash() {
                   value={selectedItem.Image || ''}
                   onChange={(e) => setSelectedItem({ ...selectedItem, Image: e.target.value })}
                   className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Active</label>
+                <input
+                  type="checkbox"
+                  checked={selectedItem.Active}
+                  onChange={(e) => setSelectedItem({ ...selectedItem, Active: e.target.checked })}
+                  className="mt-1"
                 />
               </div>
               <div className="flex justify-end">

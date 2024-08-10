@@ -77,7 +77,12 @@ export const addSponsore = createAsyncThunk(
 
 // Edit sponsor
 export const editSponsore = createAsyncThunk('sponsore/editSponsore', async (sponsor) => {
-  const { data, error } = await supabase.from('Sponsore').update(sponsor).eq('id', sponsor.id);
+  const { data, error } = await supabase.from('Sponsore').update({
+    Url: sponsor.Url,
+    Image: sponsor.Image,
+    Active: sponsor.Active,
+    Type: sponsor.type
+  }).eq('id', sponsor.id);
   if (error) throw error;
   return data[0];
 });

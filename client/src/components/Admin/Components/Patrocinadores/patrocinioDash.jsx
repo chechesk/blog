@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSponsore, editSponsore, deleteSponsore } from '../../../../redux/Reducer/NewsSponsore';
+import { fetchSponsore, editSponsore, deleteSponsore, fetchTypes } from '../../../../redux/Reducer/NewsSponsore';
 
 export default function PatrocinioDash() {
   const dispatch = useDispatch();
   const sponsoreData = useSelector(state => state.sponsore.sponsore);
+  const types = useSelector(state => state.sponsore.types);
   const loading = useSelector(state => state.sponsore.loading);
   const error = useSelector(state => state.sponsore.error);
   const [editMode, setEditMode] = useState(null);
@@ -13,15 +14,24 @@ export default function PatrocinioDash() {
 
   useEffect(() => {
     dispatch(fetchSponsore());
+    dispatch(fetchTypes());
   }, [dispatch]);
 
   const handleEdit = (sponsor) => {
     setEditMode(sponsor.id);
-    setEditFormData(sponsor);
+    setEditFormData({
+      ...sponsor,
+      type: sponsor.Type_Sponsore ? sponsor.Type_Sponsore.Name : '',
+    });
   };
 
   const handleSave = async () => {
-    await dispatch(editSponsore(editFormData));
+    const updatedFormData = {
+      ...editFormData,
+      type: editFormData.type,
+    };
+
+    await dispatch(editSponsore(updatedFormData));
     setEditMode(null);
     setEditFormData({});
     dispatch(fetchSponsore()); // Refrescar los datos después de guardar
@@ -37,7 +47,7 @@ export default function PatrocinioDash() {
   };
 
   const filteredSponsoreData = sponsoreData.filter((sponsor) =>
-    sponsor.Url.toLowerCase().includes(searchQuery.toLowerCase())
+    sponsor.Url && sponsor.Url.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading) return <div>Loading...</div>;
@@ -46,15 +56,15 @@ export default function PatrocinioDash() {
   return (
     <div className="p-8 ml-12">
       <div className='flex'>
-      <h1 className="text-2xl font-bold mb-4">Panel de Patrocinio</h1>
-      <a href="/admin/dashboard/patrocinio/add">
-            <button
-              type="button"
-              className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
-            >
-              Add Banner
-            </button>
-      </a>
+        <h1 className="text-2xl font-bold mb-4">Panel de Patrocinio</h1>
+        <a href="/admin/dashboard/patrocinio/add">
+          <button
+            type="button"
+            className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
+          >
+            Add Banner
+          </button>
+        </a>
       </div>
       
       <div className="mb-4 flex">
@@ -105,7 +115,24 @@ export default function PatrocinioDash() {
                     </a>
                   )}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{item.Type_Sponsore.Name}</td>
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  {editMode === item.id ? (
+                    <select
+                      value={editFormData.type}
+                      onChange={(e) => setEditFormData({ ...editFormData, type: e.target.value })}
+                      className="border rounded px-2 py-1"
+                    >
+                      <option value="">Select Type</option>
+                      {types.map((type) => (
+                        <option key={type.Name} value={type.Name}>
+                          {type.Name}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    item.Type_Sponsore.Name
+                  )}
+                </td>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                   {editMode === item.id ? (
                     <select

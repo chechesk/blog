@@ -1,9 +1,10 @@
+// src/components/selector.js
 import { createSelector } from 'reselect';
 
-const getSponsoreData = (state) => state.sponsore.sponsore;
-const getType = (_, type) => type;
+const getSponsore = (state) => state.sponsore.sponsore;
+const getType = (state, type) => type;
 
 export const getSponsoreByType = createSelector(
-  [getSponsoreData, getType],
-  (sponsoreData, type) => sponsoreData.filter(sponsor => sponsor.Type === type)
+  [getSponsore, getType],
+  (sponsore, type) => sponsore.filter(item => item.Type_Sponsore.Name === type && item.Active)
 );

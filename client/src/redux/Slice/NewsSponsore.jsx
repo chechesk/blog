@@ -41,11 +41,8 @@ const NewSponsoreSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(editSponsore.fulfilled, (state, action) => {
-        const updatedSponsor = action.payload;
-        const index = state.sponsore.findIndex(sponsor => sponsor.id === updatedSponsor.id);
-        if (index !== -1) {
-          state.sponsore[index] = updatedSponsor;
-        }
+        const index = state.sponsore.findIndex((sponsor) => sponsor.id === action.payload.id);
+        state.sponsore[index] = action.payload;
       })
       .addCase(addSponsore.fulfilled, (state, action) => {
         state.sponsore.push(action.payload);
