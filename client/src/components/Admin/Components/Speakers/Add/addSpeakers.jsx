@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addSpeaker } from '../../../../../redux/Reducer/NewsSpeakers';
+import supabase from '../../../../../redux/supabase';
 
 const countryFlags = {
   "Argentina": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
@@ -23,14 +24,20 @@ export default function AddSpeakers() {
     Empresa: '',
     Pais: '',
     Image: '',
-    Active: false, // Inicializado como false
+    Active: false,
   });
-
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null); // Estado para la previsualización de la imagen
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
+    const { name, value, type, checked, files } = e.target;
+    if (name === 'Image' && files) {
+      setImageFile(files[0]);
+      setImagePreview(URL.createObjectURL(files[0])); // Generar la URL de previsualización
+    } else {
+      setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
+    }
   };
 
   const validateForm = () => {
@@ -40,24 +47,73 @@ export default function AddSpeakers() {
     if (!form.Cargo) formErrors.Cargo = 'Role is required';
     if (!form.Empresa) formErrors.Empresa = 'Company is required';
     if (!form.Pais) formErrors.Pais = 'Country is required';
-    if (!form.Image) formErrors.Image = 'Image URL is required';
+    if (!imageFile) formErrors.Image = 'Image file is required';
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
   };
 
+  const uploadFileWithUniqueName = async (file, bucket, path) => {
+    let fileName = file.name;
+    let filePath = `${path}/${fileName}`;
+    let counter = 0;
+
+    while (true) {
+      const { error: uploadError } = await supabase.storage
+        .from(bucket)
+        .upload(filePath, file, { upsert: false });
+
+      if (!uploadError) {
+        // Successfully uploaded
+        return filePath;
+      } else if (uploadError.status === 409) {
+        // File already exists, increment counter and try a new name
+        counter++;
+        fileName = `${file.name.split('.').slice(0, -1).join('.')}_${counter}.${file.name.split('.').pop()}`;
+        filePath = `${path}/${fileName}`;
+      } else {
+        // Other error
+        throw uploadError;
+      }
+    }
+  };
+
   const handleSave = async () => {
-    if (validateForm()) {
-      await dispatch(addSpeaker(form));
-      setForm({
-        Nombre: '',
-        Apellido: '',
-        Cargo: '',
-        Empresa: '',
-        Pais: '',
-        Image: '',
-        Active: false,
-      });
-      setErrors({});
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length === 0) {
+      try {
+        // Subir la imagen a Supabase Storage con un nombre único
+        const filePath = await uploadFileWithUniqueName(imageFile, 'CGS', 'public/speakers');
+
+        // Obtener la URL pública de la imagen
+        const { data } = supabase
+          .storage
+          .from('CGS')
+          .getPublicUrl(filePath);
+
+        const publicUrl = data.publicUrl;
+
+        // Actualizar el formulario con la URL de la imagen
+        const updatedForm = { ...form, Image: publicUrl };
+
+        await dispatch(addSpeaker(updatedForm));
+        // Opcional: limpiar el formulario después de guardar
+        setForm({
+          Nombre: '',
+          Apellido: '',
+          Cargo: '',
+          Empresa: '',
+          Pais: '',
+          Image: '',
+          Active: false,
+        });
+        setImageFile(null);
+        setImagePreview(null); // Limpiar la previsualización
+        setErrors({});
+      } catch (error) {
+        setErrors({ Image: 'Failed to upload image' });
+      }
+    } else {
+      setErrors(formErrors);
     }
   };
 
@@ -126,17 +182,6 @@ export default function AddSpeakers() {
             {errors.Pais && <p className="text-red-500 text-xs mt-1">{errors.Pais}</p>}
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Image</label>
-            <input
-              type="text"
-              name="Image"
-              value={form.Image}
-              onChange={handleInputChange}
-              className={`mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm ${errors.Image && 'border-red-500'}`}
-            />
-            {errors.Image && <p className="text-red-500 text-xs mt-1">{errors.Image}</p>}
-          </div>
-          <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Active</label>
             <input
               type="checkbox"
@@ -146,6 +191,22 @@ export default function AddSpeakers() {
               className="mt-1"
             />
           </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Image</label>
+            <input
+              type="file"
+              name="Image"
+              onChange={handleInputChange}
+              className={`mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm ${errors.Image && 'border-red-500'}`}
+            />
+            {errors.Image && <p className="text-red-500 text-xs mt-1">{errors.Image}</p>}
+            {imagePreview && (
+              <div className="mt-4 h-40 w-40">
+                <img src={imagePreview} alt="Preview" className="max-w-full h-auto rounded-md" />
+              </div>
+            )}
+          </div>
+          
           <div className="flex justify-end">
             <button
               type="button"

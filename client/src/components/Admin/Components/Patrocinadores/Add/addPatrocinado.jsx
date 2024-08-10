@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSponsore, fetchTypes } from '../../../../../redux/Reducer/NewsSponsore';
-import  supabase  from '../../../../../redux/supabase';
+import supabase from '../../../../../redux/supabase';
 
 export default function AddPatrocinado() {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ export default function AddPatrocinado() {
   });
   const [errors, setErrors] = useState({});
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null); // Estado para la previsualización de la imagen
 
   useEffect(() => {
     dispatch(fetchTypes());
@@ -22,8 +23,9 @@ export default function AddPatrocinado() {
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-    if (name === 'Image') {
+    if (name === 'Image' && files) {
       setImageFile(files[0]);
+      setImagePreview(URL.createObjectURL(files[0])); // Generar la URL de previsualización
     } else {
       setForm((prevForm) => ({
         ...prevForm,
@@ -40,38 +42,63 @@ export default function AddPatrocinado() {
     return newErrors;
   };
 
+  const uploadFileWithUniqueName = async (file, bucket, path) => {
+    let fileName = file.name;
+    let filePath = `${path}/${fileName}`;
+    let counter = 0;
+
+    while (true) {
+      const { error: uploadError } = await supabase.storage
+        .from(bucket)
+        .upload(filePath, file, { upsert: false });
+
+      if (!uploadError) {
+        // Successfully uploaded
+        return filePath;
+      } else if (uploadError.status === 409) {
+        // File already exists, increment counter and try a new name
+        counter++;
+        fileName = `${file.name.split('.').slice(0, -1).join('.')}_${counter}.${file.name.split('.').pop()}`;
+        filePath = `${path}/${fileName}`;
+      } else {
+        // Other error
+        throw uploadError;
+      }
+    }
+  };
+
   const handleSave = async () => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
-      // Subir la imagen a Supabase Storage
-      const { data, error } = await supabase.storage
-        .from('CGS') // Cambia 'CGS' por el nombre de tu bucket
-        .upload(`public/${imageFile.name}`, imageFile);
+      try {
+        // Subir la imagen a Supabase Storage con un nombre único
+        const filePath = await uploadFileWithUniqueName(imageFile, 'CGS', 'public/sponsore');
 
-      if (error) {
+        // Obtener la URL pública de la imagen
+        const { data } = supabase
+          .storage
+          .from('CGS')
+          .getPublicUrl(filePath);
+
+        const publicUrl = data.publicUrl;
+
+        // Actualizar el formulario con la URL de la imagen
+        const updatedForm = { ...form, Image: publicUrl };
+
+        await dispatch(addSponsore(updatedForm));
+        // Opcional: limpiar el formulario después de guardar
+        setForm({
+          Image: '',
+          Url: '',
+          Active: false,
+          Type: '',
+        });
+        setImageFile(null);
+        setImagePreview(null); // Limpiar la previsualización
+        setErrors({});
+      } catch (error) {
         setErrors({ Image: 'Failed to upload image' });
-        return;
       }
-
-      // Obtener la URL pública de la imagen
-      const { data: { publicUrl } } = supabase
-        .storage
-        .from('CGS')
-        .getPublicUrl(`public/${imageFile.name}`);
-
-      // Actualizar el formulario con la URL de la imagen
-      const updatedForm = { ...form, Image: publicUrl };
-
-      await dispatch(addSponsore(updatedForm));
-      // Opcional: limpiar el formulario después de guardar
-      setForm({
-        Image: '',
-        Url: '',
-        Active: false,
-        Type: '',
-      });
-      setImageFile(null);
-      setErrors({});
     } else {
       setErrors(formErrors);
     }
@@ -87,6 +114,7 @@ export default function AddPatrocinado() {
       <form>
         <div className="mb-4">
           <label className="block text-gray-700">Image</label>
+          
           <input
             type="file"
             name="Image"
@@ -94,6 +122,11 @@ export default function AddPatrocinado() {
             className="w-full px-3 py-2 border rounded"
           />
           {errors.Image && <p className="text-red-500 text-xs mt-1">{errors.Image}</p>}
+          {imagePreview && (
+            <div className="mt-4 h-40 w-40 mb-14">
+              <img src={imagePreview} alt="Preview" className="max-w-full h-auto rounded-md" />
+            </div>
+          )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">URL</label>
@@ -144,7 +177,7 @@ export default function AddPatrocinado() {
         <a href="/admin/dashboard/patrocinio">
           <button
             type="button"
-            className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
+            className="w-full bg-gray-500 text-white py-2 rounded mt-1"
           >
             Cancel
           </button>
