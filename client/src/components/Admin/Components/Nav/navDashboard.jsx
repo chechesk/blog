@@ -173,6 +173,31 @@ export default function NavDashboard() {
 
               <li>
                 <Link
+                  to="/admin/dashboard/blog"
+                  className={getLinkClass("/admin/dashboard/blog")}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" className="size-6"><path fill="#999999" d="M2048 0v1536H731l-475 475v-475H0V0zM128 128v256h1792V128zm1792 1280V512H128v896h256v293l293-293zm-640-768h512v640h-512zm128 512h256V768h-256zM256 768h896v128H256zm0 256h896v128H256z" /></svg>
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    Blog
+                  </span>
+                </Link>
+              </li> 
+
+              <li>
+                <Link
+                  to="/admin/dashboard/gallery"
+                  className={getLinkClass("/admin/dashboard/gallery")}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 48 48"><path fill="none" stroke="#999999" strokeLinecap="round" strokeLinejoin="round" d="M31.315 12.123a4.465 4.465 0 1 1 0 8.93a4.465 4.465 0 0 1 0-8.93m-11.294 8.909l7.224 7.223a.7.7 0 0 0 .992 0l1.383-1.383a.7.7 0 0 1 .993 0l7.807 7.807a.702.702 0 0 1-.497 1.198H10.076a.702.702 0 0 1-.577-1.101l9.45-13.648a.702.702 0 0 1 1.072-.097Z"/><path fill="none" stroke="#999999" strokeLinecap="round" strokeLinejoin="round" d="M38.5 5.5h-29a4 4 0 0 0-4 4v29a4 4 0 0 0 4 4h29a4 4 0 0 0 4-4v-29a4 4 0 0 0-4-4"/></svg>
+                  
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    Gallery
+                  </span>
+                </Link>
+              </li> 
+
+              <li>
+                <Link
                   to="/admin/dashboard/profile"
                   className={getLinkClass("/admin/dashboard/profile")}
                 >

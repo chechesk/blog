@@ -23,6 +23,7 @@ import AcountDash from './components/Admin/Account/accountDash';
 import AddSpeakers from './components/Admin/Components/Speakers/Add/addSpeakers';
 import AddCarrousel from './components/Admin/Components/Carrousel/Add/addCarrousel';
 import AddPatrocinado from './components/Admin/Components/Patrocinadores/Add/addPatrocinado';
+import ImageGallery from './components/Admin/Components/ImageGallery/galery';
 
 function App() {
   const location = useLocation();
@@ -52,7 +53,9 @@ function App() {
           <Route path="/admin/dashboard/patrocinio/add" element={<ProtectedRoute element={<AddPatrocinado />} />} />
           <Route path="/admin/dashboard/strategy" element={<ProtectedRoute element={<StrategyDash />} />} />
           <Route path="/admin/dashboard/media" element={<ProtectedRoute element={<MediaDash />} />} />
+          <Route path="/admin/dashboard/blog" element={<ProtectedRoute element={<AcountDash />} />} />
           <Route path="/admin/dashboard/profile" element={<ProtectedRoute element={<AcountDash />} />} />
+          <Route path="/admin/dashboard/gallery" element={<ProtectedRoute element={<ImageGallery />} />} />
           <Route path="/404" element={<Notfound />} />
           <Route path="*" element={<Notfound />} />
         </Routes>

@@ -88,13 +88,34 @@ export const editSponsore = createAsyncThunk('sponsore/editSponsore', async (spo
 });
 
 // Delete sponsor
-export const deleteSponsore = createAsyncThunk('sponsore/deleteSponsore', async (id) => {
+export const deleteSponsore = createAsyncThunk('sponsore/deleteSponsore', async (id, { getState, rejectWithValue }) => {
+  const state = getState();
+  const sponsor = state.sponsore.sponsore.find(s => s.id === id);
+
+  if (!sponsor) {
+    return rejectWithValue('Sponsor not found');
+  }
+
+  // Extraer la clave del objeto de la URL de la imagen
+  const imageKey = sponsor.Image.split('/').slice(-1).join('/')
+  console.log(imageKey);
+
+  // Eliminar la imagen del bucket de Supabase Storage
+  const { error: deleteError } = await supabase.storage
+  .from('CGS')
+  .remove([`public/sponsore/${imageKey}`]);
+  
+  if (deleteError) {
+    return rejectWithValue(deleteError.message);
+  }
+
+  // Eliminar el sponsor de la base de datos
   const { data, error } = await supabase
     .from('Sponsore')
     .delete()
     .eq('id', id);
   if (error) {
-    throw new Error(error.message);
+    return rejectWithValue(error.message);
   }
   return id;
 });

@@ -7,6 +7,7 @@ import newReducer from './Slice/NewsBlog'
 import bannerReducer from './Slice/BannerHome'
 import strategyReducer from './Slice/NewsStrategy'
 import authReducer from './Slice/Auth'
+import imagesReducer from './Slice/ImageControl'
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     banner: bannerReducer,
     strategy: strategyReducer,
     auth: authReducer,
+    images: imagesReducer,
   },
 });
 
