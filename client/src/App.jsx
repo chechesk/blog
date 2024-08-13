@@ -1,7 +1,6 @@
 // App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-
 import Home from './Pages/home';
 import Navbar from './components/Nav/nav';
 import About from './Pages/about';
@@ -24,6 +23,9 @@ import AddSpeakers from './components/Admin/Components/Speakers/Add/addSpeakers'
 import AddCarrousel from './components/Admin/Components/Carrousel/Add/addCarrousel';
 import AddPatrocinado from './components/Admin/Components/Patrocinadores/Add/addPatrocinado';
 import ImageGallery from './components/Admin/Components/ImageGallery/galery';
+import AddStrategy from './components/Admin/Components/Strategy/Add/addStrategy';
+import BlogDash from './components/Admin/Components/Blog/blogdash';
+import AddBlogNew from './components/Admin/Components/Blog/add/addBlogNew';
 
 function App() {
   const location = useLocation();
@@ -52,8 +54,12 @@ function App() {
           <Route path="/admin/dashboard/patrocinio" element={<ProtectedRoute element={<PatrocinioDash />} />} />
           <Route path="/admin/dashboard/patrocinio/add" element={<ProtectedRoute element={<AddPatrocinado />} />} />
           <Route path="/admin/dashboard/strategy" element={<ProtectedRoute element={<StrategyDash />} />} />
+          <Route path="/admin/dashboard/strategy/add" element={<ProtectedRoute element={<AddStrategy />} />} />
           <Route path="/admin/dashboard/media" element={<ProtectedRoute element={<MediaDash />} />} />
-          <Route path="/admin/dashboard/blog" element={<ProtectedRoute element={<AcountDash />} />} />
+          <Route path="/admin/dashboard/media/add" element={<ProtectedRoute element={<AddBlogNew />} />} />
+          <Route path="/admin/dashboard/blog" element={<ProtectedRoute element={<BlogDash />} />} />
+          <Route path="/admin/dashboard/blog/:id" element={<ProtectedRoute element={<BlogDetail />} />} />
+          <Route path="/admin/dashboard/blog/add" element={<ProtectedRoute element={<AddBlogNew />} />} />
           <Route path="/admin/dashboard/profile" element={<ProtectedRoute element={<AcountDash />} />} />
           <Route path="/admin/dashboard/gallery" element={<ProtectedRoute element={<ImageGallery />} />} />
           <Route path="/404" element={<Notfound />} />

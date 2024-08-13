@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchStrategy } from "../Reducer/NewsStrategy";
+import { addStrategy, deleteStrategy, fetchStrategy, updateStrategy } from "../Reducer/NewsStrategy";
 
 const NewStrategySlice = createSlice({
   name: 'strategy',
@@ -17,11 +17,23 @@ const NewStrategySlice = createSlice({
       })
       .addCase(fetchStrategy.fulfilled, (state, action) => {
         state.loading = false;
-        state.speakers = action.payload;
+        state.strategy = action.payload;
       })
       .addCase(fetchStrategy.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(addStrategy.fulfilled, (state, action) => {
+        state.strategy.push(action.payload);
+      })
+      .addCase(updateStrategy.fulfilled, (state, action) => {
+        state.strategy = state.strategy.map((item) =>
+          item.id === action.payload.id ? action.payload : item
+        );
+      })
+      .addCase(deleteStrategy.fulfilled, (state, action) => {
+        state.loading = false;
+        state.strategy = state.strategy.filter(strategy => strategy.id !== action.payload);
       });
   },
 });

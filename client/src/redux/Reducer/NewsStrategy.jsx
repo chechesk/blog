@@ -32,6 +32,16 @@ export const fetchStrategyById = createAsyncThunk('strategy/fetchStrategyById', 
     return data[0];
   });
   
+  export const updateStrategy = createAsyncThunk('strategy/updateStrategy', async (updatedData) => {
+    const { data, error } = await supabase
+      .from('Strategy')
+      .update(updatedData)
+      .eq('id', updatedData.id)
+      .select();
+    if (error) throw error;
+    return data[0];
+  });
+
   export const deleteStrategy = createAsyncThunk('strategy/deleteStrategy', async (id) => {
     const { error } = await supabase.from('Strategy').delete().eq('id', id);
     if (error) throw new Error(error.message);

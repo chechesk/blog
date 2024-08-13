@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addNews, deleteNews, fetchById, fetchNew } from "../Reducer/NewsBlog";
+import { addNew, deleteNews, fetchById, fetchNew } from "../Reducer/NewsBlog";
 
 const newsNewsSlice = createSlice({
   name: 'news',
@@ -45,7 +45,7 @@ const newsNewsSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      .addCase(addNews.fulfilled, (state, action) => {
+      .addCase(addNew.fulfilled, (state, action) => {
         state.articles.push(action.payload);
       })
       .addCase(deleteNews.fulfilled, (state, action) => {

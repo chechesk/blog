@@ -30,14 +30,14 @@ export const fetchById = createAsyncThunk('news/fetchById', async (id, { rejectW
   }
 });
 
-  export const addNews = createAsyncThunk('news/addNews', async (newsItem) => {
-    const { data, error } = await supabase.from('news').insert([newsItem]).select();
-    if (error) throw new Error(error.message);
-    return data[0];
-  });
+export const addNew = createAsyncThunk('news/addNew', async (newData) => {
+  const { data, error } = await supabase.from('New').insert(newData).select();
+  if (error) throw error;
+  return data[0];
+});
   
   export const deleteNews = createAsyncThunk('news/deleteNews', async (id) => {
-    const { error } = await supabase.from('news').delete().eq('id', id);
+    const { error } = await supabase.from('new').delete().eq('id', id);
     if (error) throw new Error(error.message);
     return id;
   });
