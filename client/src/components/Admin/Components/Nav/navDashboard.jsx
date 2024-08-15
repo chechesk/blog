@@ -185,6 +185,30 @@ export default function NavDashboard() {
 
               <li>
                 <Link
+                  to="/admin/dashboard/setting"
+                  className={getLinkClass("/admin/dashboard/setting")}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 24 24"><path fill="#999999" d="M11 17h2l.3-1.5q.3-.125.563-.262t.537-.338l1.45.45l1-1.7l-1.15-1q.05-.35.05-.65t-.05-.65l1.15-1l-1-1.7l-1.45.45q-.275-.2-.537-.338T13.3 8.5L13 7h-2l-.3 1.5q-.3.125-.562.263T9.6 9.1l-1.45-.45l-1 1.7l1.15 1q-.05.35-.05.65t.05.65l-1.15 1l1 1.7l1.45-.45q.275.2.538.338t.562.262zm1-3q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m-9 7V3h18v18zm2-2h14V5H5zm0 0V5z"/></svg>
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    Setting
+                  </span>
+                </Link>
+              </li> 
+
+              <li>
+                <Link
+                  to="/admin/dashboard/settingseo"
+                  className={getLinkClass("/admin/dashboard/settingseo")}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 48 48"><g fill="none" stroke="#999999" strokeWidth="4"><rect width="40" height="32" x="4" y="8" rx="1.633"/><path strokeLinecap="round" strokeLinejoin="round" d="M16 18.948c-2-2.948-5.502-1.01-5.251 2.02C11 24 15 24 15.249 27.032C15.5 30.062 12 32 10 29.051M26 18h-4v13h4m-4-6h4"/><rect width="6" height="13" x="32" y="18" strokeLinecap="round" strokeLinejoin="round" rx="3"/></g></svg>
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    Setting Seo
+                  </span>
+                </Link>
+              </li> 
+
+              <li>
+                <Link
                   to="/admin/dashboard/gallery"
                   className={getLinkClass("/admin/dashboard/gallery")}
                 >

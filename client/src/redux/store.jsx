@@ -8,6 +8,8 @@ import bannerReducer from './Slice/BannerHome'
 import strategyReducer from './Slice/NewsStrategy'
 import authReducer from './Slice/Auth'
 import imagesReducer from './Slice/ImageControl'
+import settingReducer from './Slice/setting'
+import seoReducer from './Slice/seo'
 
 const store = configureStore({
   reducer: {
@@ -19,6 +21,8 @@ const store = configureStore({
     strategy: strategyReducer,
     auth: authReducer,
     images: imagesReducer,
+    settings: settingReducer,
+    seo: seoReducer,
   },
 });
 

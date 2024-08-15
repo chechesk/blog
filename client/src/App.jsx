@@ -1,5 +1,5 @@
 // App.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Pages/home';
 import Navbar from './components/Nav/nav';
@@ -26,12 +26,56 @@ import ImageGallery from './components/Admin/Components/ImageGallery/galery';
 import AddStrategy from './components/Admin/Components/Strategy/Add/addStrategy';
 import BlogDash from './components/Admin/Components/Blog/blogdash';
 import AddBlogNew from './components/Admin/Components/Blog/add/addBlogNew';
+import { useDispatch, useSelector } from 'react-redux';
+import SEO from './components/Helmet/helmet';
+import TagManager from 'react-gtm-module';
+import { fetchSettings } from './redux/Reducer/setting';
+import EditSettings from './components/Admin/Components/Settings/settingDasboard';
+import EditSeoSettings from './components/Admin/Components/SettingsSeo/seoDasboard';
 
 function App() {
   const location = useLocation();
+  const dispatch =useDispatch()
   const isNotFoundPage = location.pathname === '/404';
   const isLoginPage = location.pathname === '/login';
   const isAdminDashboard = location.pathname.startsWith('/admin/dashboard');
+  const { gtm_id, ga_id, status, error } = useSelector((state) => state.settings);
+
+  useEffect(() => {
+    dispatch(fetchSettings());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchSettings());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (gtm_id) {
+      TagManager.initialize({
+        gtmId: gtm_id,
+      });
+    }
+
+    if (ga_id) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', ga_id, {
+        cookie_flags: 'SameSite=None; Secure',
+      });
+    }
+  }, [gtm_id, ga_id]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
+
 
   return (
     <>
@@ -61,6 +105,8 @@ function App() {
           <Route path="/admin/dashboard/blog/:id" element={<ProtectedRoute element={<BlogDetail />} />} />
           <Route path="/admin/dashboard/blog/add" element={<ProtectedRoute element={<AddBlogNew />} />} />
           <Route path="/admin/dashboard/profile" element={<ProtectedRoute element={<AcountDash />} />} />
+          <Route path="/admin/dashboard/setting" element={<ProtectedRoute element={<EditSettings />} />} />
+          <Route path="/admin/dashboard/settingseo" element={<ProtectedRoute element={<EditSeoSettings />} />} />
           <Route path="/admin/dashboard/gallery" element={<ProtectedRoute element={<ImageGallery />} />} />
           <Route path="/404" element={<Notfound />} />
           <Route path="*" element={<Notfound />} />
@@ -73,6 +119,7 @@ function App() {
 
 const AppWrapper = () => (
   <Router>
+    <SEO />
     <App />
   </Router>
 );
