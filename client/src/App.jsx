@@ -32,6 +32,7 @@ import TagManager from 'react-gtm-module';
 import { fetchSettings } from './redux/Reducer/setting';
 import EditSettings from './components/Admin/Components/Settings/settingDasboard';
 import EditSeoSettings from './components/Admin/Components/SettingsSeo/seoDasboard';
+import Register from './Pages/register';
 
 function App() {
   const location = useLocation();
@@ -90,6 +91,7 @@ function App() {
           <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/blog/name/:name" element={<BlogDetail />} />
           <Route path="/login" element={<LoginComponents />} />
+          <Route path="/registro" element={<Register />} />
           <Route path="/admin/dashboard" element={<ProtectedRoute element={<AdmDashboard />} />} />
           <Route path="/admin/dashboard/banner" element={<ProtectedRoute element={<CarrouselDash />} />} />
           <Route path="/admin/dashboard/banner/add" element={<ProtectedRoute element={<AddCarrousel />} />} />

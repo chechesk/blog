@@ -10,6 +10,7 @@ import authReducer from './Slice/Auth'
 import imagesReducer from './Slice/ImageControl'
 import settingReducer from './Slice/setting'
 import seoReducer from './Slice/seo'
+import formReducer from './Slice/Form'
 
 const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
     images: imagesReducer,
     settings: settingReducer,
     seo: seoReducer,
+    forms: formReducer,
   },
 });
 

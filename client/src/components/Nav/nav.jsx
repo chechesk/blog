@@ -62,11 +62,12 @@ const Navbar = () => {
                 About
               </Link>
             </li>
-            {/* <li>
-              <Link to="/services" className={getLinkClass('/services')}>
-                Services
+          <li>
+              <Link to="/registro" className={getLinkClass('/registro')}>
+                Registro
               </Link>
             </li>
+              {/* 
             <li>
               <Link to="/pricing" className={getLinkClass('/pricing')}>
                 Pricing
