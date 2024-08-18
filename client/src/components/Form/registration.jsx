@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createForm } from '../../redux/Reducer/Form';
 
@@ -19,6 +19,22 @@ const Form = () => {
   });
 
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (formStatus === 'succeeded') {
+      alert('Registro completado');
+      setFormData({
+        visitorCategory: '',
+        topic: '',
+        firstName: '',
+        lastName: '',
+        company: '',
+        jobTitle: '',
+        country: '',
+        email: ''
+      });
+    }
+  }, [formStatus]);
 
   const validate = () => {
     const newErrors = {};
@@ -61,7 +77,8 @@ const Form = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (name, value) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
@@ -93,10 +110,10 @@ const Form = () => {
                 name="visitorCategory" 
                 className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" 
                 value={formData.visitorCategory}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                onChange={handleChange}
                 required
               >
-                <option value="" disabled selected>Seleccione una categoría</option>
+                <option value="" disabled>Seleccione una categoría</option>
                 <option value="IGSA member">IGSA member</option>
               </select>
               {errors.visitorCategory && <span className="text-red-500">{errors.visitorCategory}</span>}
@@ -109,10 +126,10 @@ const Form = () => {
                 name="topic" 
                 className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" 
                 value={formData.topic}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                onChange={handleChange}
                 required
               >
-                <option value="" disabled selected>Seleccione un tema</option>
+                <option value="" disabled>Seleccione un tema</option>
                 <option value="Industry standards">Industry standards</option>
                 <option value="Regulations">Regulations</option>
                 <option value="Legislation">Legislation</option>
@@ -128,7 +145,7 @@ const Form = () => {
               placeholder="Nombre *" 
               className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" 
               value={formData.firstName}
-              onChange={(e) => handleChange(e.target.name, e.target.value)}
+              onChange={handleChange}
               required 
             />
             {errors.firstName && <span className="text-red-500">{errors.firstName}</span>}
@@ -140,7 +157,7 @@ const Form = () => {
               placeholder="Apellidos *" 
               className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" 
               value={formData.lastName}
-              onChange={(e) => handleChange(e.target.name, e.target.value)}
+              onChange={handleChange}
               required 
             />
             {errors.lastName && <span className="text-red-500">{errors.lastName}</span>}
@@ -153,7 +170,7 @@ const Form = () => {
                 placeholder="Company *" 
                 className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" 
                 value={formData.company}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                onChange={handleChange}
                 required 
               />
               {errors.company && <span className="text-red-500">{errors.company}</span>}
@@ -167,7 +184,7 @@ const Form = () => {
                 placeholder="Job title *" 
                 className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" 
                 value={formData.jobTitle}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                onChange={handleChange}
                 required 
               />
               {errors.jobTitle && <span className="text-red-500">{errors.jobTitle}</span>}
@@ -181,7 +198,7 @@ const Form = () => {
                 placeholder="Country *" 
                 className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" 
                 value={formData.country}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                onChange={handleChange}
                 required 
               />
               {errors.country && <span className="text-red-500">{errors.country}</span>}
@@ -195,7 +212,7 @@ const Form = () => {
                 placeholder="E-mail *" 
                 className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700" 
                 value={formData.email}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                onChange={handleChange}
                 required 
               />
               {errors.email && <span className="text-red-500">{errors.email}</span>}

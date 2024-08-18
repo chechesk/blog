@@ -28,7 +28,7 @@ const ImageGallery = () => {
   console.log('Error:', error);
 
   return (
-    <div>
+    <div className='m-8 p-12'>
       {loading && <p>Cargando...</p>}
       {error && <p>Error: {error}</p>}
       <div className="flex flex-wrap gap-2 p-4">

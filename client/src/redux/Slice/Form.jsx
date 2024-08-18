@@ -34,8 +34,16 @@ const formsSlice = createSlice({
           state.forms[existingFormIndex] = updatedForm;
         }
       })
+      .addCase(createForm.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(createForm.fulfilled, (state, action) => {
-        state.forms.push(action.payload);
+        state.status = 'succeeded';
+        state.forms.push(action.payload[0]);
+      })
+      .addCase(createForm.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
       })
       .addCase(updateForm.rejected, (state, action) => {
         state.status = 'failed';

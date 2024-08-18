@@ -5,7 +5,7 @@ export const fetchImages = createAsyncThunk('images/fetchImages', async () => {
   const { data, error } = await supabase
   .storage
   .from('CGS')
-  .list(user?.id + '/',{
+  .list('public/sponsore' + '/',{
     limit: 100,
     offset: 0,
     sortBy: { column: "name", order: "asc"}
