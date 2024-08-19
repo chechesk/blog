@@ -7,6 +7,7 @@ import PatrocinioModule from '../../components/Patrocinio/patrocinio';
 import MediaModule from '../../components/MediaPartner/MediaPartnerComponents';
 import StrategyModule from '../../components/strategicAlliance/StrategyComponents';
 import Price from '../../components/Pricing/resales';
+import BlogCard from '../../components/blogHome/BlogCard';
 
 
 
@@ -25,6 +26,7 @@ export default function Home() {
       <StrategyModule />
       <SpeakerModule />
       <Price />
+      <BlogCard />
     </div>
   );
 }
