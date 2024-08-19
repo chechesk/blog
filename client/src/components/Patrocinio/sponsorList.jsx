@@ -22,7 +22,7 @@ const SponsoreList = ({ type, columns }) => {
   return (
     <div className={gridClasses}>
       {sponsore.map(item => (
-        <div key={item.id} className="flex flex-col items-center justify-center rounded-lg border-slate-500 border-2">
+        <div key={item.id} className="flex flex-col items-center justify-center rounded-2xl ">
           <a href={item.Url} target="_blank" rel="noopener noreferrer">
             <img src={item.Image} alt='Patrocinio' className="max-w-full h-auto" />
           </a>

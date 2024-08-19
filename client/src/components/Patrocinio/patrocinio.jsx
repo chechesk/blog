@@ -8,11 +8,11 @@ export default function PatrocinioModule() {
             <div className='w-full max-w-6xl'>
                 <section className="mb-8">
                      <h1 className="text-2xl font-bold mb-4 text-center">Patrocinadores Diamante</h1>
-                     <SponsoreList type="Diamante" columns={6} />
+                     <SponsoreList type="Diamante" columns={7} />
                 </section>
                 <section className="mb-8">
                     <h1 className="text-2xl font-bold mb-4 text-center">Patrocinadores Super Host</h1>
-                    <SponsoreList type="Super Host" />
+                    <SponsoreList type="Super Host" columns={7}   />
                 </section>
                 <section className="mb-1">
                     <h1 className="text-2xl font-bold mb-4 text-center">Patrocinadores Platinum</h1>

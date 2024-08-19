@@ -11,6 +11,7 @@ import imagesReducer from './Slice/ImageControl'
 import settingReducer from './Slice/setting'
 import seoReducer from './Slice/seo'
 import formReducer from './Slice/Form'
+import socialMediaReducer from './Slice/socialMedia';
 
 const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ const store = configureStore({
     settings: settingReducer,
     seo: seoReducer,
     forms: formReducer,
+    socialmedia: socialMediaReducer,
   },
 });
 

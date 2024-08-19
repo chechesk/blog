@@ -8,7 +8,7 @@ export default function MediaModule() {
             <div className='w-full max-w-6xl'>
                 <section className="mb-8">
                      <h1 className="text-2xl font-bold mb-4 text-center">PARCEIROS DE MÍDIA</h1>
-                     <MediaList  columns={4} />
+                     <MediaList  columns={7} />
                 </section>
                
             </div>

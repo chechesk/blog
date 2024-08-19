@@ -33,10 +33,10 @@ const Carrousel = () => {
       <Carousel slideInterval={2000}>
         {banners.map((banner) => (
           <div key={banner.id} className="flex items-center justify-center h-full mt-20">
-            <div className="h-[600px] w-full p-8 rounded-lg shadow-lg">
-              <h1 className={`${banner.gradient} bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl text-center`}>
+            <div className="h-[600px] w-full p-4 rounded-lg shadow-lg">
+              <h1 className=" text-2xl font-extrabold text-white sm:text-5xl text-center ">
                 {banner.Title}
-                <span className="sm:block text-center">{banner.SubTitle}</span>
+                <span className="sm:block text-center mt-8">{banner.SubTitle}</span>
               </h1>
               <div className='flex justify-center text-white'>
                 <p className="mt-4 max-w-xl sm:text-xl/relaxed text-center">
@@ -45,7 +45,7 @@ const Carrousel = () => {
               </div>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <a
-                  className="block w-full rounded-xl border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto phone:w-60 phone:text-[12px] phone:text-nowrap"
+                  className="block w-full rounded-xl border border-blue-600 bg-[#FFDC00] px-12 py-3 text-sm font-medium text-black hover:bg-[#FFDC00] hover:text-black focus:outline-none focus:ring active:text-opacity-75 sm:w-auto phone:w-60 phone:text-[12px] phone:text-nowrap"
                   href={banner.BotonLink}
                   target="_blank" 
                   rel="noopener noreferrer"

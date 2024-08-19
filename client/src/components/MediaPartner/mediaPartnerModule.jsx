@@ -24,7 +24,7 @@ const MediaList = ({ columns }) => {
   return (
     <div className={gridClasses} >
       {activeMedia && activeMedia.map(item => (
-        <div key={item.id} className="flex flex-col items-center justify-center rounded-lg border-slate-500	border-2 ">
+        <div key={item.id} className="flex flex-col items-center justify-center rounded-2xl  ">
           <a href={item.Url} target="_blank" rel="noopener noreferrer">
             <img src={item.Image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2-gPOCLe1jEzEVF82ZsCTqWvhVC87_i5UjQ&s'} alt='Patrocinio' className="max-w-full h-auto " />
           </a>

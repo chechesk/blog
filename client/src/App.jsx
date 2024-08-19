@@ -34,6 +34,7 @@ import EditSettings from './components/Admin/Components/Settings/settingDasboard
 import EditSeoSettings from './components/Admin/Components/SettingsSeo/seoDasboard';
 import Register from './Pages/register';
 import RegisterDasboard from './components/Admin/Components/Register/registerDasboard';
+import SocialMediaManager from './components/Admin/Components/SocialMedia/socialManager';
 
 function App() {
   const location = useLocation();
@@ -109,6 +110,7 @@ function App() {
           <Route path="/admin/dashboard/blog/add" element={<ProtectedRoute element={<AddBlogNew />} />} />
           <Route path="/admin/dashboard/profile" element={<ProtectedRoute element={<AcountDash />} />} />
           <Route path="/admin/dashboard/register" element={<ProtectedRoute element={<RegisterDasboard />} />} />
+          <Route path="/admin/dashboard/socialmedia" element={<ProtectedRoute element={<SocialMediaManager />} />} />
           <Route path="/admin/dashboard/setting" element={<ProtectedRoute element={<EditSettings />} />} />
           <Route path="/admin/dashboard/settingseo" element={<ProtectedRoute element={<EditSeoSettings />} />} />
           <Route path="/admin/dashboard/gallery" element={<ProtectedRoute element={<ImageGallery />} />} />

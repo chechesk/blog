@@ -1,18 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CSVLink } from 'react-csv';
+import { utils, writeFile } from 'xlsx';
 import EditFormModal from './editForm';
 import DeleteConfirmationModal from './deleteForm';
 import { fetchForm } from '../../../../redux/Reducer/Form';
 
 export default function RegisterDashboard() {
   const dispatch = useDispatch();
-  const { forms, loading, error } = useSelector((state) => state.forms);
+  const { forms = [], loading, error } = useSelector((state) => state.forms); // Ensure forms is always an array
   const [editForm, setEditForm] = useState(null);
   const [deleteFormId, setDeleteFormId] = useState(null);
 
   useEffect(() => {
     dispatch(fetchForm());
   }, [dispatch]);
+
+  const exportToExcel = () => {
+    const ws = utils.json_to_sheet(forms);
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, 'Registros');
+    const date = new Date();
+    const dateString = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    writeFile(wb, `registros_${dateString}.xlsx`);
+  };
+
+  const csvHeaders = [
+    { label: 'Visitor Category', key: 'visitorCategory' },
+    { label: 'Topic', key: 'topic' },
+    { label: 'First Name', key: 'firstName' },
+    { label: 'Last Name', key: 'lastName' },
+    { label: 'Company', key: 'company' },
+    { label: 'Job Title', key: 'jobTitle' },
+    { label: 'Country', key: 'country' },
+    { label: 'Email', key: 'email' }
+  ];
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -22,6 +44,22 @@ export default function RegisterDashboard() {
       <h1>Register Data</h1>
       <section>
         <div className="overflow-x-auto">
+          <div className="mb-4">
+            <CSVLink
+              data={forms}
+              headers={csvHeaders}
+              filename={`registros_${new Date().toISOString().slice(0, 10)}.csv`}
+              className="inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700 mr-2"
+            >
+              Exportar a CSV
+            </CSVLink>
+            <button
+              onClick={exportToExcel}
+              className="inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700"
+            >
+              Exportar a Excel
+            </button>
+          </div>
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="ltr:text-left rtl:text-right">
               <tr>
