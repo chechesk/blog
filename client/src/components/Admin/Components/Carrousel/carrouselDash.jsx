@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBanner, fetchBaner, updateBanner } from '../../../../redux/Reducer/BannerHome';
+import { deleteBanner, fetchBaner } from '../../../../redux/Reducer/BannerHome';
 import Modal from 'react-modal';
+import EditCarrouselModal from './editCarrousel';
+import DeleteConfirmationModal from './deleteCarrousel';
 
 Modal.setAppElement('#root'); // Necesario para accesibilidad
 
 export default function CarrouselDash() {
   const dispatch = useDispatch();
   const { banners, status, error } = useSelector((state) => state.banner);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState({
-    Title: '',
-    SubTitle: '',
-    description: '',
-    BotonText: '',
-    BotonLink: '',
-    Active: false,
-  });
+  const [editCarrousel, setEditCarrousel] = useState(null);
+  const [deleteCarrouselId, setDeleteCarrouselId] = useState(null);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -24,38 +19,9 @@ export default function CarrouselDash() {
     }
   }, [status, dispatch]);
 
-  const openModal = (item) => {
-    if (item && item.id) {
-      setSelectedItem(item);
-      setIsModalOpen(true);
-    } else {
-      console.error('Item is undefined or missing id');
-    }
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedItem({
-      Title: '',
-      SubTitle: '',
-      description: '',
-      BotonText: '',
-      BotonLink: '',
-      Active: false,
-    });
-  };
-
-  const handleSave = async () => {
-    if (selectedItem && selectedItem.id) {
-      await dispatch(updateBanner({ id: selectedItem.id, updates: selectedItem }));
-      closeModal();
-    } else {
-      console.error('Selected item is undefined or missing id');
-    }
-  };
-
   const handleDelete = async (id) => {
     await dispatch(deleteBanner(id));
+    setDeleteCarrouselId(null); // Close modal after deletion
   };
 
   if (status === 'loading') {
@@ -68,16 +34,16 @@ export default function CarrouselDash() {
 
   return (
     <div className="p-8 ml-12">
-      <div className='flex'>
-      <h1 className="text-2xl font-bold mb-4">Carrousel Home Panel</h1>     
-      <a href="/admin/dashboard/banner/add">
-            <button
-              type="button"
-              className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
-            >
-              Add Banner
-            </button>
-      </a>
+      <div className="flex">
+        <h1 className="text-2xl font-bold mb-4">Carrousel Home Panel</h1>     
+        <a href="/admin/dashboard/banner/add">
+          <button
+            type="button"
+            className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
+          >
+            Add Banner
+          </button>
+        </a>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -104,13 +70,13 @@ export default function CarrouselDash() {
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.Active ? 'Yes' : 'No'}</td>
                   <td className="whitespace-nowrap px-4 py-2">
                     <button
-                      onClick={() => openModal(item)}
+                      onClick={() => setEditCarrousel(item)}
                       className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => setDeleteCarrouselId(item.id)}
                       className="inline-block rounded bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700 ml-2"
                     >
                       Delete
@@ -126,111 +92,20 @@ export default function CarrouselDash() {
           </tbody>
         </table>
       </div>
+      {editCarrousel && (
+        <EditCarrouselModal
+          form={editCarrousel}
+          onClose={() => setEditCarrousel(null)}
+        />
+      )}
 
-      {/* Modal */}
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Edit Item"
-        className="modal"
-        overlayClassName="overlay"
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.75)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 1000, // Asegúrate de que el overlay esté encima de todo
-          },
-          content: {
-            position: 'relative',
-            inset: 'auto',
-            width: '500px',
-            padding: '20px',
-            borderRadius: '8px',
-            backgroundColor: '#fff',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            margin: '0 auto', // Centrar horizontalmente
-          },
-        }}
-      >
-        {selectedItem && (
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Edit Item</h2>
-            <form>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Title</label>
-                <input
-                  type="text"
-                  value={selectedItem.Title || ''}
-                  onChange={(e) => setSelectedItem({ ...selectedItem, Title: e.target.value })}
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Subtitle</label>
-                <input
-                  type="text"
-                  value={selectedItem.SubTitle || ''}
-                  onChange={(e) => setSelectedItem({ ...selectedItem, SubTitle: e.target.value })}
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Description</label>
-                <textarea
-                  value={selectedItem.description || ''}
-                  onChange={(e) => setSelectedItem({ ...selectedItem, description: e.target.value })}
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Button Text</label>
-                <input
-                  type="text"
-                  value={selectedItem.BotonText || ''}
-                  onChange={(e) => setSelectedItem({ ...selectedItem, BotonText: e.target.value })}
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Button Link</label>
-                <input
-                  type="text"
-                  value={selectedItem.BotonLink || ''}
-                  onChange={(e) => setSelectedItem({ ...selectedItem, BotonLink: e.target.value })}
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Active</label>
-                <input
-                  type="checkbox"
-                  checked={selectedItem.Active || false}
-                  onChange={(e) => setSelectedItem({ ...selectedItem, Active: e.target.checked })}
-                  className="mt-1 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div>
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={handleSave}
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-      </Modal>
+      {deleteCarrouselId && (
+        <DeleteConfirmationModal
+          formId={deleteCarrouselId}
+          onDelete={() => handleDelete(deleteCarrouselId)}
+          onClose={() => setDeleteCarrouselId(null)}
+        />
+      )}
     </div>
   );
 }

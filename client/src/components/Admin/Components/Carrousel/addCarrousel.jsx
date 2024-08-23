@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addBanner } from '../../../../../redux/Reducer/BannerHome'; // Ajusta la ruta según sea necesario
-import { Link, useNavigate } from 'react-router-dom';
+import { addBanner } from '../../../../redux/Reducer/BannerHome';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddCarrousel() {
   const dispatch = useDispatch();
@@ -38,16 +38,7 @@ export default function AddCarrousel() {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       await dispatch(addBanner(form));
-      // Opcional: limpiar el formulario después de guardar
-      setForm({
-        Title: '',
-        SubTitle: '',
-        description: '',
-        BotonText: '',
-        BotonLink: '',
-        Active: false,
-      });
-      setErrors({});
+      navigate('/admin/dashboard/banner'); // Redirect after saving
     } else {
       setErrors(formErrors);
     }

@@ -10,11 +10,14 @@ export const fetchBaner = createAsyncThunk('banner/fetchBanner', async (_, thunk
 });
 
 export const updateBanner = createAsyncThunk('banner/updateBanner', async ({ id, updates }) => {
+  console.log('Updating Banner:', { id, updates }); // Añadir log para verificar el contenido
+
   const { data, error } = await supabase
     .from('BannerHome')
     .update(updates)
     .eq('id', id)
     .select();
+    
   if (error) {
     throw new Error(error.message);
   }

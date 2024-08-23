@@ -20,7 +20,7 @@ import StrategyDash from './components/Admin/Components/Strategy/strategyDash';
 import CarrouselDash from './components/Admin/Components/Carrousel/carrouselDash';
 import AcountDash from './components/Admin/Account/accountDash';
 import AddSpeakers from './components/Admin/Components/Speakers/Add/addSpeakers';
-import AddCarrousel from './components/Admin/Components/Carrousel/Add/addCarrousel';
+import AddCarrousel from './components/Admin/Components/Carrousel/addCarrousel';
 import AddPatrocinado from './components/Admin/Components/Patrocinadores/Add/addPatrocinado';
 import ImageGallery from './components/Admin/Components/ImageGallery/galery';
 import AddStrategy from './components/Admin/Components/Strategy/Add/addStrategy';
