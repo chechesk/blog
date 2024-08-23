@@ -1,13 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteForm } from '../../../../redux/Reducer/Form';
+import { deleteBanner } from '../../../../redux/Reducer/BannerHome';
+
 
 
 const DeleteConfirmationModal = ({ formId, onClose }) => {
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
-    await dispatch(deleteForm(formId));
+    await dispatch(deleteBanner(formId));
     onClose();
   };
   

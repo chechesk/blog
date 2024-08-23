@@ -5,7 +5,7 @@ import { createForm, deleteForm, fetchForm, updateForm } from '../Reducer/Form';
 const formsSlice = createSlice({
   name: 'forms',
   initialState: {
-    banners: {},
+    forms: {},
     status: 'idle',
     error: null,
   },
