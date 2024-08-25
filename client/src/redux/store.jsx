@@ -12,6 +12,7 @@ import settingReducer from './Slice/setting'
 import seoReducer from './Slice/seo'
 import formReducer from './Slice/Form'
 import socialMediaReducer from './Slice/socialMedia';
+import suscriptorReducer from './Slice/Suscriptor';
 
 const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ const store = configureStore({
     seo: seoReducer,
     forms: formReducer,
     socialmedia: socialMediaReducer,
+    suscriptor: suscriptorReducer,
   },
 });
 
