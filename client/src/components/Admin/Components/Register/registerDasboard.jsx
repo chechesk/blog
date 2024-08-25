@@ -1,3 +1,4 @@
+// src/components/RegisterDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CSVLink } from 'react-csv';
@@ -8,7 +9,7 @@ import { fetchForm } from '../../../../redux/Reducer/Form';
 
 export default function RegisterDashboard() {
   const dispatch = useDispatch();
-  const { forms = [], loading, error } = useSelector((state) => state.forms); // Ensure forms is always an array
+  const { forms, loading, error } = useSelector((state) => state.forms);
   const [editForm, setEditForm] = useState(null);
   const [deleteFormId, setDeleteFormId] = useState(null);
 
@@ -46,7 +47,7 @@ export default function RegisterDashboard() {
         <div className="overflow-x-auto">
           <div className="mb-4">
             <CSVLink
-              data={forms}
+              data={Array.isArray(forms) ? forms : []}
               headers={csvHeaders}
               filename={`registros_${new Date().toISOString().slice(0, 10)}.csv`}
               className="inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700 mr-2"
@@ -75,7 +76,7 @@ export default function RegisterDashboard() {
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              {forms && forms.map((item) => (
+              {Array.isArray(forms) && forms.map((item) => (
                 <tr key={item.id}>
                   <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{item.visitorCategory}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.topic}</td>

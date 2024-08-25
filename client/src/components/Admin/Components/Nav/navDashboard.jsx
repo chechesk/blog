@@ -209,6 +209,18 @@ export default function NavDashboard() {
 
               <li>
                 <Link
+                  to="/admin/dashboard/pricecards"
+                  className={getLinkClass("/admin/dashboard/pricecards")}
+                >
+                 <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 24 24"><path fill="#999999" d="M2 20V4h20v16zm6-3h2v-1h1q.425 0 .713-.288T12 15v-3q0-.425-.288-.712T11 11H8v-1h4V8h-2V7H8v1H7q-.425 0-.712.288T6 9v3q0 .425.288.713T7 13h3v1H6v2h2zm8-.75l2-2h-4zM14 10h4l-2-2z"/></svg>
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    Price Card
+                  </span>
+                </Link>
+              </li> 
+
+              <li>
+                <Link
                   to="/admin/dashboard/setting"
                   className={getLinkClass("/admin/dashboard/setting")}
                 >

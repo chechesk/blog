@@ -7,6 +7,7 @@ import { fetchMedia } from '../../../../redux/Reducer/NewsMedia';
 import { fetchStrategy } from '../../../../redux/Reducer/NewsStrategy';
 import { fetchNew } from '../../../../redux/Reducer/NewsBlog';
 import { Link } from 'react-router-dom';
+import Suscriptores from './suscriptores';
 
 export default function AdmDashboard() {
   const dispatch = useDispatch();
@@ -206,6 +207,14 @@ export default function AdmDashboard() {
                   </div>
                 </div>
               </Link>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className='grid grid-cols-2'>
+            <div></div>
+            <div>
+              <Suscriptores />
             </div>
           </div>
         </section>
