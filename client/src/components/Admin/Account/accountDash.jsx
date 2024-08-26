@@ -1,43 +1,87 @@
-import React from 'react'
+import { useState } from 'react'
+import { Camera, Lock } from 'lucide-react'
 
-export default function AcountDash() {
+export default function Component() {
+  const [imageUrl, setImageUrl] = useState("/placeholder.svg?height=100&width=100")
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => setImageUrl(e.target.result)
+      reader.readAsDataURL(file)
+    }
+  }
+
   return (
-    <div className='p-8 ml-12'>
-        <h1>Perfil de Usuario</h1>
-        <section>
-        <div className="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
-  <dl className="-my-3 divide-y divide-gray-100 text-sm">
-    <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
-      <dt className="font-medium text-gray-900">Title</dt>
-      <dd className="text-gray-700 sm:col-span-2">Mr</dd>
-    </div>
-
-    <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
-      <dt className="font-medium text-gray-900">Name</dt>
-      <dd className="text-gray-700 sm:col-span-2">John Frusciante</dd>
-    </div>
-
-    <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
-      <dt className="font-medium text-gray-900">Occupation</dt>
-      <dd className="text-gray-700 sm:col-span-2">Guitarist</dd>
-    </div>
-
-    <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
-      <dt className="font-medium text-gray-900">Salary</dt>
-      <dd className="text-gray-700 sm:col-span-2">$1,000,000+</dd>
-    </div>
-
-    <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
-      <dt className="font-medium text-gray-900">Bio</dt>
-      <dd className="text-gray-700 sm:col-span-2">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et facilis debitis explicabo
-        doloremque impedit nesciunt dolorem facere, dolor quasi veritatis quia fugit aperiam
-        aspernatur neque molestiae labore aliquam soluta architecto?
-      </dd>
-    </div>
-  </dl>
-</div>
-        </section>
+    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="px-4 py-5 sm:px-6">
+        <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">
+          Perfil de Usuario
+        </h3>
+      </div>
+      <div className="border-t border-gray-200">
+        <div className="px-4 py-5 sm:p-6 space-y-6">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="relative">
+              <img
+                className="h-24 w-24 rounded-full object-cover"
+                src={imageUrl}
+                alt="Profile picture"
+              />
+              <label
+                htmlFor="picture"
+                className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md cursor-pointer hover:bg-gray-100"
+              >
+                <Camera className="w-5 h-5 text-gray-600" />
+                <input
+                  type="file"
+                  id="picture"
+                  className="sr-only"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                />
+              </label>
+            </div>
+            <button className="px-3 py-1 text-sm text-blue-600 hover:text-blue-800 focus:outline-none">
+              Cambiar imagen
+            </button>
+          </div>
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              Nombre
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Tu nombre"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="tu@email.com"
+            />
+          </div>
         </div>
+      </div>
+      <div className="px-4 py-4 sm:px-6 border-t border-gray-200">
+        <button
+          type="button"
+          className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <Lock className="w-4 h-4 mr-2" />
+          Actualizar Contraseña
+        </button>
+      </div>
+    </div>
   )
 }

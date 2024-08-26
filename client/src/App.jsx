@@ -36,6 +36,8 @@ import Register from './Pages/register';
 import RegisterDasboard from './components/Admin/Components/Register/registerDasboard';
 import SocialMediaManager from './components/Admin/Components/SocialMedia/socialManager';
 import PricePanel from './components/Admin/Components/PriceTab/priceAdm';
+import Analytics from './components/Admin/Components/Analytics/analyticsUi';
+import AdminConfig from './components/Admin/Page/Dashboard/AdminConfig';
 
 function App() {
   const location = useLocation();
@@ -115,7 +117,9 @@ function App() {
           <Route path="/admin/dashboard/setting" element={<ProtectedRoute element={<EditSettings />} />} />
           <Route path="/admin/dashboard/settingseo" element={<ProtectedRoute element={<EditSeoSettings />} />} />
           <Route path="/admin/dashboard/pricecards" element={<ProtectedRoute element={<PricePanel />} />} />
+          <Route path="/admin/dashboard/analytics" element={<ProtectedRoute element={<Analytics />} />} />
           <Route path="/admin/dashboard/gallery" element={<ProtectedRoute element={<ImageGallery />} />} />
+          <Route path="/admin/dashboard/module" element={<ProtectedRoute element={<AdminConfig />} />} />
           <Route path="/404" element={<Notfound />} />
           <Route path="*" element={<Notfound />} />
         </Routes>

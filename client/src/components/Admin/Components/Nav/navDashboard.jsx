@@ -221,6 +221,18 @@ export default function NavDashboard() {
 
               <li>
                 <Link
+                  to="/admin/dashboard/analytics"
+                  className={getLinkClass("/admin/dashboard/analytics")}
+                >
+                 <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 20 20"><path fill="#999999" d="M18 18V2H2v16zM16 5H4V4h12zM7 7v3h3c0 1.66-1.34 3-3 3s-3-1.34-3-3s1.34-3 3-3m1 2V7c1.1 0 2 .9 2 2zm8-1h-4V7h4zm0 3h-4V9h4zm0 2h-4v-1h4zm0 3H4v-1h12z"/></svg>
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    Google Analytics
+                  </span>
+                </Link>
+              </li> 
+
+              <li>
+                <Link
                   to="/admin/dashboard/setting"
                   className={getLinkClass("/admin/dashboard/setting")}
                 >
@@ -239,6 +251,19 @@ export default function NavDashboard() {
                   <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 48 48"><g fill="none" stroke="#999999" strokeWidth="4"><rect width="40" height="32" x="4" y="8" rx="1.633"/><path strokeLinecap="round" strokeLinejoin="round" d="M16 18.948c-2-2.948-5.502-1.01-5.251 2.02C11 24 15 24 15.249 27.032C15.5 30.062 12 32 10 29.051M26 18h-4v13h4m-4-6h4"/><rect width="6" height="13" x="32" y="18" strokeLinecap="round" strokeLinejoin="round" rx="3"/></g></svg>
                   <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                     Setting Seo
+                  </span>
+                </Link>
+              </li> 
+
+              <li>
+                <Link
+                  to="/admin/dashboard/module"
+                  className={getLinkClass("/admin/dashboard/module")}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 14 14"><path fill="none" stroke="#999999" stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25H1a.5.5 0 0 0-.5.5V13a.5.5 0 0 0 .5.5h4.25a.5.5 0 0 0 .5-.5V8.75a.5.5 0 0 0-.5-.5m7.75 0H8.75a.5.5 0 0 0-.5.5V13a.5.5 0 0 0 .5.5H13a.5.5 0 0 0 .5-.5V8.75a.5.5 0 0 0-.5-.5M9.13.5H4.88a.5.5 0 0 0-.5.5v4.25a.5.5 0 0 0 .5.5h4.25a.5.5 0 0 0 .5-.5V1a.5.5 0 0 0-.5-.5"/></svg>
+                  
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    Module Home
                   </span>
                 </Link>
               </li> 
