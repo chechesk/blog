@@ -29,9 +29,9 @@ const formsSlice = createSlice({
       .addCase(updateForm.fulfilled, (state, action) => {
         state.status = 'succeeded';
         const updatedForm = action.payload;
-        const existingFormIndex = state.forms.findIndex(form => form.id === updatedForm.id);
+        const existingFormIndex = state.forms.findIndex(item => item.id === updatedForm.id);
         if (existingFormIndex >= 0) {
-          state.forms[existingFormIndex] = updatedForm;
+          state.forms[existingBannerIndex] = updatedForm;
         }
       })
       .addCase(createForm.pending, (state) => {

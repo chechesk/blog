@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateForm } from '../../../../redux/Reducer/Form';
+import { updateContact } from '../../../../redux/Reducer/contact';
 
 const EditFormModal = ({ form, onClose }) => {
   const dispatch = useDispatch();
@@ -15,12 +15,8 @@ const EditFormModal = ({ form, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData && formData.id) {
-    dispatch(updateForm({ id: formData.id, updates: formData }));
+    dispatch(updateContact(formData));
     onClose();
-  } else {
-    console.error('Form data is invalid:', formData);
-    }
   };
 
   return (
@@ -29,80 +25,54 @@ const EditFormModal = ({ form, onClose }) => {
         <h2 className="text-xl mb-4">Editar Registro</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-4">
-            <label htmlFor="">Categoria Visitante
+            <label htmlFor="">Name
             <input 
               type="text" 
-              name="visitorCategory" 
-              placeholder="Visitor Category" 
-              value={formData.visitorCategory}
+              name="Name" 
+              placeholder="Name" 
+              value={formData.Name}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3"
             /></label>
-            <label htmlFor="">Departamento
+            <label htmlFor="">Email
             <input 
               type="text" 
-              name="topic" 
-              placeholder="Topic" 
-              value={formData.topic}
+              name="Email" 
+              placeholder="Email" 
+              value={formData.Email}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3"
             /></label>
-            <label htmlFor="">Nombre
+            <label htmlFor="">Phone
             <input 
               type="text" 
-              name="firstName" 
-              placeholder="First Name" 
-              value={formData.firstName}
+              name="Phone" 
+              placeholder="Phone" 
+              value={formData.Phone}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3"
             /></label>
-            <label htmlFor="">Apellido
+            <label htmlFor="">Subject
             <input 
               type="text" 
-              name="lastName" 
-              placeholder="Last Name" 
-              value={formData.lastName}
+              name="Subject" 
+              placeholder="Subject" 
+              value={formData.Subject}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3"
             /></label>
             <label htmlFor="">
-                Empresa
+            Message
             
             <input 
               type="text" 
-              name="company" 
-              placeholder="Company" 
-              value={formData.company}
+              name="Message" 
+              placeholder="Message" 
+              value={formData.Message}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3"
             /></label>
-            <label htmlFor="">Cargo
-            <input 
-              type="text" 
-              name="jobTitle" 
-              placeholder="Job Title" 
-              value={formData.jobTitle}
-              onChange={(e) => handleChange(e.target.name, e.target.value)}
-              className="w-full border border-gray-300 rounded-md py-2 px-3"
-            /></label>
-            <label htmlFor="">Pais
-            <input 
-              type="text" 
-              name="country" 
-              placeholder="Country" 
-              value={formData.country}
-              onChange={(e) => handleChange(e.target.name, e.target.value)}
-              className="w-full border border-gray-300 rounded-md py-2 px-3"
-            /></label>
-            <label htmlFor="">Correo
-            <input 
-              type="email" 
-              name="email" 
-              placeholder="Email" 
-              value={formData.email}
-              onChange={(e) => handleChange(e.target.name, e.target.value)}
-              className="w-full border border-gray-300 rounded-md py-2 px-3"
-            /></label>
+           
           </div>
           <div className="mt-4 flex justify-end">
             <button type="button" onClick={onClose} className="mr-2 px-4 py-2 bg-gray-300 rounded-md">Cancelar</button>

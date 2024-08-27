@@ -16,6 +16,7 @@ import suscriptorReducer from './Slice/Suscriptor';
 import pricecardsReducer from './Slice/PriceCards'
 import analyticsReducer from './Slice/Analytics'
 import adminConfigReducer from './Slice/adminConfig'
+import contactReducer from './Slice/contact'
 
 const store = configureStore({
   reducer: {
@@ -35,6 +36,7 @@ const store = configureStore({
     pricecards: pricecardsReducer,
     analytics: analyticsReducer,
     adminConfig: adminConfigReducer,
+    contact: contactReducer,
   },
 });
 

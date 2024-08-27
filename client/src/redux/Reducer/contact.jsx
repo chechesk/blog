@@ -2,13 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import supabase from '../supabase';
 
 
-export const createForm = createAsyncThunk(
-  'form/createForm',
+export const createContact = createAsyncThunk(
+  'contact/createContact',
   async (formData, { rejectWithValue }) => {
     const { data, error } = await supabase
-      .from('registrations')
+      .from('contact')
       .insert([formData]);
-
     if (error) {
       return rejectWithValue(error.message);
     }
@@ -16,19 +15,19 @@ export const createForm = createAsyncThunk(
   }
 );
 
-export const fetchForm = createAsyncThunk('form/fetchForm', async (_, thunkAPI) => {
+export const fetchContact = createAsyncThunk('contact/fetchContact', async (_, thunkAPI) => {
     const { data, error } = await supabase
-      .from('registrations')
+      .from('contact')
       .select('*');
     if (error) throw new Error(error.message);
     return data;
   });
 
-  export const deleteForm = createAsyncThunk(
-    'form/deleteForm',
+  export const deleteContact = createAsyncThunk(
+    'contact/deleteContact',
     async (id, { rejectWithValue }) => {
       const { data, error } = await supabase
-        .from('registrations')
+        .from('contact')
         .delete()
         .eq('id', id);
   
@@ -39,16 +38,18 @@ export const fetchForm = createAsyncThunk('form/fetchForm', async (_, thunkAPI) 
     }
   );
 
-  export const updateForm = createAsyncThunk('form/updateForm',async ({ id, updates }, { rejectWithValue }) => {
-    console.log('Updating Banner:', { id, updates });
-    const { data, error } = await supabase
-        .from('registrations')
-        .update(updates)
+  export const updateContact = createAsyncThunk(
+    'contact/updateContact',
+    async (formData, { rejectWithValue }) => {
+      const { id, ...updateData } = formData;
+      const { data, error } = await supabase
+        .from('contact')
+        .update(updateData)
         .eq('id', id);
   
       if (error) {
         return rejectWithValue(error.message);
       }
-      return data[0];
+      return data;
     }
   );

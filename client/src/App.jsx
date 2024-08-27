@@ -38,6 +38,7 @@ import SocialMediaManager from './components/Admin/Components/SocialMedia/social
 import PricePanel from './components/Admin/Components/PriceTab/priceAdm';
 import Analytics from './components/Admin/Components/Analytics/analyticsUi';
 import AdminConfig from './components/Admin/Page/Dashboard/AdminConfig';
+import Consultas from './components/Admin/Page/Contact/Consultas';
 
 function App() {
   const location = useLocation();
@@ -120,6 +121,7 @@ function App() {
           <Route path="/admin/dashboard/analytics" element={<ProtectedRoute element={<Analytics />} />} />
           <Route path="/admin/dashboard/gallery" element={<ProtectedRoute element={<ImageGallery />} />} />
           <Route path="/admin/dashboard/module" element={<ProtectedRoute element={<AdminConfig />} />} />
+          <Route path="/admin/dashboard/contact" element={<ProtectedRoute element={<Consultas />} />} />
           <Route path="/404" element={<Notfound />} />
           <Route path="*" element={<Notfound />} />
         </Routes>

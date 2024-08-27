@@ -233,6 +233,18 @@ export default function NavDashboard() {
 
               <li>
                 <Link
+                  to="/admin/dashboard/contact"
+                  className={getLinkClass("/admin/dashboard/contact")}
+                >
+                 <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 2048 2048"><path fill="#999999" d="M1330 1203q136 47 245 131t186 196t118 243t41 275h-128q0-164-58-304t-162-244t-243-161t-305-59q-107 0-206 27t-184 76t-155 119t-119 155t-77 185t-27 206H128q0-144 42-275t119-242t186-194t245-133q-78-42-140-102T475 969t-67-157t-24-172q0-133 50-249t137-204T774 50t250-50q133 0 249 50t204 137t137 203t50 250q0 88-23 171t-67 156t-105 133t-139 103M512 640q0 106 40 199t110 162t163 110t199 41t199-40t162-110t110-163t41-199t-40-199t-110-162t-163-110t-199-41t-199 40t-162 110t-110 163t-41 199"/></svg>
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    Solicitudes de Contacto
+                  </span>
+                </Link>
+              </li> 
+
+              <li>
+                <Link
                   to="/admin/dashboard/setting"
                   className={getLinkClass("/admin/dashboard/setting")}
                 >
@@ -260,7 +272,7 @@ export default function NavDashboard() {
                   to="/admin/dashboard/module"
                   className={getLinkClass("/admin/dashboard/module")}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 14 14"><path fill="none" stroke="#999999" stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25H1a.5.5 0 0 0-.5.5V13a.5.5 0 0 0 .5.5h4.25a.5.5 0 0 0 .5-.5V8.75a.5.5 0 0 0-.5-.5m7.75 0H8.75a.5.5 0 0 0-.5.5V13a.5.5 0 0 0 .5.5H13a.5.5 0 0 0 .5-.5V8.75a.5.5 0 0 0-.5-.5M9.13.5H4.88a.5.5 0 0 0-.5.5v4.25a.5.5 0 0 0 .5.5h4.25a.5.5 0 0 0 .5-.5V1a.5.5 0 0 0-.5-.5"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="size-6" viewBox="0 0 14 14"><path fill="none" stroke="#999999" strokeLinecap="round" strokeLinejoin="round" d="M5.25 8.25H1a.5.5 0 0 0-.5.5V13a.5.5 0 0 0 .5.5h4.25a.5.5 0 0 0 .5-.5V8.75a.5.5 0 0 0-.5-.5m7.75 0H8.75a.5.5 0 0 0-.5.5V13a.5.5 0 0 0 .5.5H13a.5.5 0 0 0 .5-.5V8.75a.5.5 0 0 0-.5-.5M9.13.5H4.88a.5.5 0 0 0-.5.5v4.25a.5.5 0 0 0 .5.5h4.25a.5.5 0 0 0 .5-.5V1a.5.5 0 0 0-.5-.5"/></svg>
                   
                   <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                     Module Home
