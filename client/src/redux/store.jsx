@@ -18,6 +18,7 @@ import analyticsReducer from './Slice/Analytics'
 import adminConfigReducer from './Slice/adminConfig'
 import contactReducer from './Slice/contact'
 
+
 const store = configureStore({
   reducer: {
     sponsore: sponsoreReducer,

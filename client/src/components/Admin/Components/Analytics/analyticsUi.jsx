@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Users, Eye, Clock, MousePointer } from "lucide-react"
+import { useSelector, useDispatch } from 'react-redux';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts'
+import { fetchAnalyticsData } from '../../../../redux/Reducer/Analytics';
 
 // Simulated data - replace with actual API call to Google Analytics
-const analyticsData = {
+const analyticsData2 = {
   users: 1234,
   pageViews: 5678,
   avgSessionDuration: '2:45',
@@ -42,9 +44,25 @@ const MetricCard = ({ title, value, icon }) => {
   )
 }
 
-export default function Component() {
-  const [data] = useState(analyticsData)
+export default function AnalyticsDash() {
+  const [data] = useState(analyticsData2)
+  const dispatch = useDispatch();
+  const analyticsData = useSelector((state) => state.analytics.data);
+  const status = useSelector((state) => state.analytics.status);
 
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchAnalyticsData());
+    }
+  }, [status, dispatch]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error fetching data</div>;
+  }
   return (
     <div className="ml-14 mx-4 p-4 space-y-8 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Panel de Usuario - Métricas de Google Analytics</h1>
