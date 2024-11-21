@@ -21,7 +21,7 @@ export default function NavDashboard() {
   };
 
   return (
-    <div className="flex h-screen w-16 flex-col justify-between border-e bg-white fixed">
+    <div className="flex h-screen w-16 justify-between border-e bg-white fixed">
       <div>
         <Link to='/admin/dashboard'>
           <div className="inline-flex size-16 items-center justify-center">

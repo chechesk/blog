@@ -87,7 +87,7 @@ function App() {
   return (
     <>
       {!isNotFoundPage && !isLoginPage && !isAdminDashboard && <Navbar />}
-      {isAdminDashboard && <NavDashboard />} {/* Show NavAdmin for dashboard route */}
+      {isAdminDashboard && <div> <NavDashboard /></div>} {/* Show NavAdmin for dashboard route */}
       <div>
         <Routes>
           <Route path='/' element={<Home />} />
