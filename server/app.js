@@ -3,12 +3,31 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var useragent = require('express-useragent');
 var cors = require('cors')
 
 var indexRouter = require('./src/routes/index');
 const connectDB = require('./src/Model/db');
+const { createClient } = require('@supabase/supabase-js');
 
 var app = express();
+
+
+app.use(useragent.express());
+
+// Middleware para detección de IP y dispositivo
+app.use((req, res, next) => {
+  const clientIp = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const userAgent = req.useragent;
+
+  console.log(`Nueva conexión desde IP: ${clientIp}`);
+  console.log(`Dispositivo: ${userAgent.isMobile ? 'Móvil' : userAgent.isDesktop ? 'Escritorio' : 'Otro'}`);
+  console.log(`Navegador: ${userAgent.browser}`);
+  console.log(`Sistema Operativo: ${userAgent.os}`);
+
+  next();
+});
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -19,6 +38,11 @@ app.use((req, res, next) => {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use('/', (req,res)=>{
+  console.log('Log');
+  res.send('Hola')
+})
 
 app.use(logger('dev'));
 app.use(express.json());
